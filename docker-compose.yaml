@@ -1,0 +1,60 @@
+services:
+
+  btcmap-image-generator:
+    image: btcmap-image-generator:latest
+    build:
+      context: .
+      dockerfile: dockerfile-image-generator
+    container_name: btcmap-image-generator
+    restart: always
+    init: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - /mnt/ssd/data/btcmap/btcmap-image-generator/templates:/usr/btcmap-image-generator/templates
+      - /mnt/ssd/data/btcmap/btcmap-image-generator/default.yml:/usr/btcmap-image-generator/config/default.yml
+    networks:
+      network1:
+        ipv4_address: 172.24.0.100
+
+  btcmap-telegram:
+    image: btcmap-telegram:latest
+    build:
+      context: .
+      dockerfile: dockerfile-telegram
+    container_name: btcmap-telegram
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - /mnt/ssd/data/btcmap/btcmap-telegram/default.yml:/usr/btcmap-telegram/config/default.yml
+      - /mnt/ssd/data/btcmap/data:/usr/data
+      - /mnt/ssd/data/btcmap/docs:/usr/docs
+    networks:
+      network1:
+        ipv4_address: 172.24.0.101
+
+
+  btcmap-osm:
+    image: btcmap-osm:latest
+    build:
+      context: .
+      dockerfile: dockerfile-osm
+    container_name: btcmap-osm
+    restart: always
+    depends_on: [btcmap-telegram]
+    env_file:
+      - .env
+    volumes:
+      - /mnt/ssd/data/btcmap/btcmap-osm/default.yml:/usr/btcmap-osm/config/default.yml
+      - /mnt/ssd/data/btcmap/data:/usr/data
+    ports:
+      - 3030:3000 # Zmq
+    networks:
+      network1:
+        ipv4_address: 172.24.0.102
+
+networks:
+  network1:
+    name: btcmap-network
+    external: true

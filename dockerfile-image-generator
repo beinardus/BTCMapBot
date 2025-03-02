@@ -1,0 +1,19 @@
+FROM canardconfit/puppeteer-docker:latest AS builder-common
+
+WORKDIR /usr/btcmap-common
+COPY ./btcmap-common/package.json .
+RUN npm install --production
+
+FROM builder-common AS builder
+
+WORKDIR /usr/btcmap-image-generator
+COPY ./btcmap-image-generator/package.json .
+RUN npm install --production
+
+FROM builder
+
+WORKDIR /usr/btcmap-image-generator
+COPY ./btcmap-image-generator/src ./src
+COPY ./btcmap-common/src ../btcmap-common/src
+
+CMD ["npm", "start"]

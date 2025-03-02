@@ -1,0 +1,13 @@
+log-level: debug
+proxy: ""
+cron: "*/10 * * * *"
+initialRunupPeriod: 172800 # 48h in seconds
+database:
+  path: "../data/database.db" 
+btcmap:
+  # ZULU is substituted in code
+  url-fmt: "https://api.btcmap.org/v2/elements?updated_since=[ZULU]&limit=5000"
+geoapify:
+  url-fmt: "https://api.geoapify.com/v1/geocode/reverse?lat=[LAT]&lon=[LON]&apiKey=[GEOAPIFY_API_KEY]"
+zmq:
+  url: "tcp://0.0.0.0:3000"
