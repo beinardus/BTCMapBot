@@ -1,5 +1,5 @@
 # BTCMap Telegram Bot
-The aim of this project is to notify the creation and deletion of Bitcoin accepting locations on ![BTCMap.org](https://btcmap.org/) in specific geographic regions.
+The aim of this project is to notify the creation and deletion of Bitcoin accepting locations on [BTCMap.org](https://btcmap.org/) in specific geographic regions.
 
 The service is split into 3 parts (3 Docker containers)
 - `btcmap_osm`, tracking changes on Open Street Map (via BTCMap API)
@@ -8,15 +8,15 @@ The service is split into 3 parts (3 Docker containers)
 
 ## BTCMapBot on Telegram
 It is not recommended to run your own bot. Instead, register to the running bot on Telegram:
-![t.me/ST599HMhfbHm_bot](https://t.me/ST599HMhfbHm_bot)
+[t.me/ST599HMhfbHm_bot](https://t.me/ST599HMhfbHm_bot)
 
-Launching your own bot will increase the data load on BTCMap.org and ![Geoapify](https://www.geoapify.com/).
+Launching your own bot will increase the data load on [BTCMap.org](https://btcmap.org/) and [Geoapify](https://www.geoapify.com/).
 
-However, you can decide to make use of the `btcmap-osm` ZMQ interface and build your own bot on top of that.
+However, you can decide to make use of the `btcmap-osm` `zmq` (ZeroMQ) interface and build your own bot on top of that.
 
 ## btcmap-osm
 This service makes use of the logging API of BTCMap, but implements a full lifetime cycle of locations (create -> update -> delete -> create), where BTCMap only provides a one time `create` event and multiple `delete` and `update` events.
-Updates are broadcasted to `ZMQ` listeners. Data is send using JSON. Use the `status` in the message to handle it. Before the data is send, it is enriched with geographical properties using the `Reverse Geocoding API` of ![https://www.geoapify.com/](Geoapify) based on the `lat` and `lon` properties:
+Updates are broadcasted to `zmq` listeners. Data is send using JSON. Use the `status` in the message to handle it. Before the data is send, it is enriched with geographical properties using the `Reverse Geocoding API` of [https://www.geoapify.com/](Geoapify) based on the `lat` and `lon` properties:
 
 |property|description|
 |---|---|
@@ -29,7 +29,7 @@ Updates are broadcasted to `ZMQ` listeners. Data is send using JSON. Use the `st
 | lon | longitude |
 | type | OSM type of the location: `node`, `way` etc. |
 
-A public ZMQ service is provided on:  
+A public `zmq` service is provided on:  
 `tcp://dutchbtc.ddns.net:3030`
 
 ## btcmap-telegram
