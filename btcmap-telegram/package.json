@@ -33,6 +33,7 @@
     "js-yaml": "^4.1.0",
     "jsonata": "^2.0.6",
     "telegram-format": "^3.1.0",
+    "translation": "file:../translation",
     "winston": "^3.17.0",
     "zeromq": "^6.3.0"
   },

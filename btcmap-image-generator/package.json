@@ -15,7 +15,8 @@
     "current-module-paths": "^1.1.2",
     "express": "^4.21.2",
     "js-yaml": "^4.1.0",
-    "puppeteer": "^24.1.0"
+    "puppeteer": "^24.1.0",
+    "translation": "file:../translation"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.7",

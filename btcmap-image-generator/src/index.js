@@ -4,6 +4,7 @@ import config from "config";
 import {promises as fs} from "fs";
 import puppeteer from "puppeteer";
 import path from "path";
+import { COUNTRY, NAME, TOWN } from "translation";
 
 const app = express();
 const PORT = config.get("port");
@@ -27,7 +28,10 @@ const getProcessedHtml = async (state, params) => {
     const processedHtml = template
       .replace(/\[name\]/g, params.name || "(onbekend)")
       .replace(/\[city\]/g, params.city || "(onbekend)")
-      .replace(/\[country\]/g, params.country || "(onbekend)");
+      .replace(/\[country\]/g, params.country || "(onbekend)")
+      .translate(/\[t_name]/g, params.lan, NAME)
+      .translate(/\[t_town]/g, params.lan, TOWN)
+      .translate(/\[t_country]/g, params.lan, COUNTRY);
 
     return processedHtml;
   }

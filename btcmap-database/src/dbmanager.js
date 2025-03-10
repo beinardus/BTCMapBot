@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS "users" (
         "type"  TEXT,
         "is_active"     boolean DEFAULT 1,
         "filter"        text,
+        "language"      text,
         PRIMARY KEY("id")
 );`);
 
@@ -72,7 +73,7 @@ const getUserById = async (id) => {
 const getActiveUsers = async () => {
   return await dbConnection.execute(async db => {
     return await db.all(`
-      select id, name, type, filter
+      select id, name, type, filter, language
       from users
       where is_active = 1;
     `);
@@ -86,6 +87,16 @@ const setFilter = async (id, filter) => {
       set filter = $filter
       where id = $id;
   `, {$id: id, $filter: filter});
+  });
+}
+
+const setLanguage = async (id, language) => {
+  await dbConnection.execute(async db => {
+    await db.run(`
+      update users
+      set language = $language
+      where id = $id;
+  `, {$id: id, $language: language});
   });
 }
 
@@ -180,4 +191,4 @@ const batchUpdateLocations = async(data) => {
   });  
 }
 
-export { setup, addUser, getActiveUsers, getUserById, setFilter, deactivateUser, getStats, batchUpdateLocations, enrichDataWithActivationStatus, addOrUpdateLocation, dbConnection }
+export { setup, addUser, getActiveUsers, getUserById, setFilter, setLanguage, deactivateUser, getStats, batchUpdateLocations, enrichDataWithActivationStatus, addOrUpdateLocation, dbConnection }
