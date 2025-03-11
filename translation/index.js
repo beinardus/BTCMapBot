@@ -8,6 +8,8 @@ const NAME = 'name'
 const TOWN = 'town'
 const COUNTRY = 'country'
 const UNKNOWN = 'unknown'
+const A_NEW_ONE = 'a new one'
+const AND_GONE = 'and gone'
 
 const dictionary = {
   [WELCOME]: {[NL]: "WELKOM", [EN]: "WELCOME"},
@@ -15,7 +17,9 @@ const dictionary = {
   [NAME]: {[NL]: "naam", [EN]: "name" },
   [TOWN]: {[NL]: "plaats", [EN]: "town" },
   [COUNTRY]: {[NL]: "land", [EN]: "country" },
-  [UNKNOWN]: {[NL]: "onbekend", [EN]: "unknown" }
+  [UNKNOWN]: {[NL]: "onbekend", [EN]: "unknown" },
+  [A_NEW_ONE]: {[NL]: "Een nieuwe!!", [EN]: "A new one!!"},
+  [AND_GONE]: {[NL]: "Aaand it's gone!?!", [EN]: "Aaand it's gone!?!"}
 }
 
 const t = (lan, key) => {
@@ -31,4 +35,4 @@ String.prototype.translate = function(search, lan, key) {
   return this.replace(search, t(lan, key));
 };
 
-export {languages, WELCOME, GOODBYE, NAME, TOWN, COUNTRY, UNKNOWN, t}
+export {languages, WELCOME, GOODBYE, NAME, TOWN, COUNTRY, UNKNOWN, A_NEW_ONE, AND_GONE, t}

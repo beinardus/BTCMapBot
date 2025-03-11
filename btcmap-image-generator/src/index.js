@@ -5,7 +5,7 @@ import config from "config";
 import {promises as fs} from "fs";
 import puppeteer from "puppeteer";
 import path from "path";
-import { COUNTRY, NAME, TOWN, UNKNOWN, t } from "translation";
+import { COUNTRY, NAME, TOWN, UNKNOWN, A_NEW_ONE, AND_GONE, t } from "translation";
 
 const app = express();
 const PORT = config.get("port");
@@ -31,7 +31,9 @@ const getProcessedHtml = async (state, params) => {
       country: params.country || `(${t(params.lan, UNKNOWN)})`,
       t_name: t(params.lan, NAME),
       t_town: t(params.lan, TOWN),
-      t_country: t(params.lan, COUNTRY)
+      t_country: t(params.lan, COUNTRY),
+      t_new: t(params.lan, A_NEW_ONE),
+      t_gone: t(params.lan, AND_GONE)
     }
 
     // Replace placeholders with actual values
