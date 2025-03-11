@@ -1,11 +1,11 @@
 import { commands } from "../src/commands.js";
+import { CommandAuthError } from "../src/error-dispatcher.js";
 import { handleTextMessage } from "../src/message-handler.js";
 import * as roles from "../src/telegram-user-roles.js";
 import { getUserRole } from "../src/telegram-utils.js";
 
-// avoid reporting to Telegram
+// avoid any reporting to Telegram
 jest.mock('../src/notify.js');
-import { sendMessage as sendMessageMock } from "../src/notify.js";
 
 // manipulate the user role
 jest.mock("../src/telegram-utils.js", () => ({
@@ -26,29 +26,49 @@ const testCases = [
   {cmd: "sendmessage", any: false, admin: false, master: true}
 ]
 
-test.each(testCases)("$cmd", async ({cmd, any, admin, master}) => {
+describe('Test if the action is called if the user is authorized', () => {
+  test.each(testCases)("$cmd", async ({cmd, any, admin, master}) => {
 
-  const actionMock = jest
-    .spyOn(commands[cmd], 'action')
-    .mockResolvedValue(undefined);
+    const actionMock = jest
+      .spyOn(commands[cmd], 'action')
+      .mockResolvedValue(undefined);
 
-  const rolesToCheck = [
-    {role: roles.MEMBER, expected: any},
-    {role: roles.ADMINISTRATOR, expected: admin},
-    {role: roles.MASTER, expected: master}
-  ];
+    const rolesToCheck = [
+      {role: roles.MEMBER, expected: any},
+      {role: roles.ADMINISTRATOR, expected: admin},
+      {role: roles.MASTER, expected: master}
+    ];
 
-  for(const role of rolesToCheck) {
-    getUserRole.mockResolvedValue(role.role);
+    for(const role of rolesToCheck.filter(r => r.expected)) {
+      getUserRole.mockResolvedValue(role.role);
 
-    await handleTextMessage({
-      chat: {id: 123},
-      from: {id: 123},
-      text: `/${cmd} args`});
-  
-    expect(actionMock).toHaveBeenCalledTimes(role.expected?1:0);
-    expect(sendMessageMock).toHaveBeenCalledTimes(role.expected?0:1);
-    actionMock.mockClear();
-    sendMessageMock.mockClear();
-  }
+      await handleTextMessage({
+        chat: {id: 123},
+        from: {id: 123},
+        text: `/${cmd} args`});
+    
+      expect(actionMock).toHaveBeenCalledTimes(1);
+      actionMock.mockClear();
+    }
+  });
+});
+
+
+describe('Test if the CommandAuth error is thrown is the user is not authorized', () => {
+  test.each(testCases)("$cmd", async ({cmd, any, admin, master}) => {
+    const rolesToCheck = [
+      {role: roles.MEMBER, expected: any},
+      {role: roles.ADMINISTRATOR, expected: admin},
+      {role: roles.MASTER, expected: master}
+    ];
+
+    for(const role of rolesToCheck.filter(r => !r.expected)) {
+      getUserRole.mockResolvedValue(role.role);
+
+      await expect(handleTextMessage({
+        chat: {id: 123},
+        from: {id: 123},
+        text: `/${cmd} args`})).rejects.toThrow(CommandAuthError);
+    }
+  });
 });

@@ -9,7 +9,7 @@ test("The (correct) user should be deactivated in the database", async () => {
     await deactivateUser(2);
 
     const activeUsers = await getActiveUsers();
-    expect(activeUsers).toEqual([{"filter": "true", "id": 1, "name": "user 1", "type": "type", "language": null}]);
+    expect(activeUsers).toEqual([{"filter": "true", "id": 1, "name": "user 1", "type": "type", "language": "en"}]);
   });
 });
 
@@ -25,8 +25,8 @@ test("An inactive user can be revived", async () => {
 
     const activeUsers = await getActiveUsers();
     expect(activeUsers).toEqual([
-      {"filter": "true", "id": 1, "name": "user 1", "type": "type", "language": null},
-      {"filter": "true", "id": 2, "name": "user 2", "type": "type", "language": null},      
+      {"filter": "true", "id": 1, "name": "user 1", "type": "type", "language": "en"},
+      {"filter": "true", "id": 2, "name": "user 2", "type": "type", "language": "en"},      
     ]);
   });
 });
@@ -41,7 +41,7 @@ test("setLanguage should update the correct user", async () => {
 
     const activeUsers = await getActiveUsers();
     expect(activeUsers).toEqual([
-      {"filter": "true", "id": 1, "name": "user 1", "type": "type", "language": null},
+      {"filter": "true", "id": 1, "name": "user 1", "type": "type", "language": "en"},
       {"filter": "true", "id": 2, "name": "user 2", "type": "type", "language": "nl"},      
     ]);
   });
@@ -57,8 +57,8 @@ test("setFilter should update the correct user", async () => {
 
     const activeUsers = await getActiveUsers();
     expect(activeUsers).toEqual([
-      {"filter": "true", "id": 1, "name": "user 1", "type": "type", "language": null},
-      {"filter": "country_code = 'nl'", "id": 2, "name": "user 2", "type": "type", "language": null},      
+      {"filter": "true", "id": 1, "name": "user 1", "type": "type", "language": "en"},
+      {"filter": "country_code = 'nl'", "id": 2, "name": "user 2", "type": "type", "language": "en"},      
     ]);
   });
 });

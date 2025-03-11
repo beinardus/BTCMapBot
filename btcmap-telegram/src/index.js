@@ -17,7 +17,7 @@ async function startClient() {
     logger.info(`Subscriber connected to publisher ${zmqConfig.url}`);
     logger.info(`Image generator located at: ${process.env.IMAGE_GENERATOR_URL}`);
 
-    // Subscribe to all messages (you can specify a topic if the publisher uses topics)
+    // Subscribe to all messages
     subscriber.subscribe("");
     logger.info("Subscribed to all messages");
 

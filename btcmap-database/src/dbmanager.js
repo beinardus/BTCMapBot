@@ -25,9 +25,9 @@ CREATE TABLE IF NOT EXISTS "users" (
         "id"    INTEGER,
         "name"  TEXT,
         "type"  TEXT,
-        "is_active"     boolean DEFAULT 1,
-        "filter"        text,
-        "language"      text,
+        "is_active"     BOOLEAN DEFAULT 1,
+        "filter"        TEXT,
+        "language"      TEXT DEFAULT "en",
         PRIMARY KEY("id")
 );`);
 
@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS "stats" (
 const addUser = async(chat) => {
   await dbConnection.execute(async db => {
     await db.run(`
-        insert into users (id, name, is_active, type, filter)
-        values ($id, $name, $is_active, $type, $filter)
+        insert into users (id, name, is_active, type, filter, language)
+        values ($id, $name, $is_active, $type, $filter, $language)
         on conflict(id) do update set is_active = $is_active;        
-    `, {$id: chat.id, $name: chat.name, $type: chat.type, $filter: "true", $is_active: true});
+    `, {$id: chat.id, $name: chat.name, $type: chat.type, $filter: "true", $is_active: true, $language: "en"});
   });
 };
 
@@ -63,7 +63,7 @@ const deactivateUser = async (id) => {
 const getUserById = async (id) => {
   return await dbConnection.execute(async db => {
     return await db.get(`
-      select id, name, type, filter
+      select id, name, type, filter, language
       from users
       where id = $id;
     `, {$id: id});

@@ -8,17 +8,17 @@ import { dbmanager } from "btcmap-database";
 import { logger } from "btcmap-common";
 
 const handleBtcMapUpdate = async (data) => {
-  const image = constructImageUrl(data);
-  const message = constructMessage(data);
   const recipients = await filterRecipients(data.geo);
-
-  await notifyRecipients(recipients, image, message);
+  await notifyRecipients(recipients, data);
 };
 
-const notifyRecipients = async (recipients, image, message) => {
+const notifyRecipients = async (recipients, data) => {
   for (const r of recipients) 
     try {
-      await sendNotification(image, message, r.id);
+      const imageUrl = constructImageUrl({...data, user: r});
+      const message = constructMessage({...data, user: r});
+
+      await sendNotification(imageUrl, message, r.id);
     } 
     catch (err) {
       await handleNotificationError(err, r.id);

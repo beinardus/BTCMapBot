@@ -67,6 +67,10 @@ Minimal version to copy
 │   ├── src
 │   ├── package.json
 │   ├── index.js
+├── translation
+│   ├── src
+│   ├── package.json
+│   ├── index.js
 ├── http-utils
 │   ├── package.json
 │   ├── index.js

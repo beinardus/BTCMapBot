@@ -35,6 +35,13 @@ COPY ./geoapify/src ./src
 COPY ./geoapify/index.js ./
 RUN npm install --production
 
+FROM base AS translation
+WORKDIR /usr/translation
+COPY ./translation/package.json ./
+COPY ./translation/src ./src
+COPY ./translation/index.js ./
+RUN npm install --production
+
 # Final stage: Pull everything together (using the same base image)
 # ============================================
 FROM base AS builder
@@ -45,6 +52,7 @@ COPY --from=http-utils /usr/http-utils ./http-utils
 COPY --from=btcmap-common /usr/btcmap-common ./btcmap-common
 COPY --from=btcmap-database /usr/btcmap-database ./btcmap-database
 COPY --from=geoapify /usr/geoapify ./geoapify
+COPY --from=translation /usr/translation ./translation
 
 WORKDIR /usr/btcmap-telegram
 COPY ./btcmap-telegram/package.json ./

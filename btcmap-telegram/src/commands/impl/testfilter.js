@@ -5,13 +5,12 @@ import { getGeo, GeoapifyError } from 'geoapify';
 import { createJsonata } from '../../jsonata.js';
 import { sendMessage } from '../../notify.js';
 import { Command } from '../command.js';
+import { CommandArgsError, CommandError } from '../../error-dispatcher.js';
 
 class TestFilterCommand extends Command {
   async action({chatId, args}) {
-    if (!args) {
-      await sendMessage(`/${this.token} requires a coordinate: lat,lon`, chatId);
-      return;
-    }
+    if (!args)
+      throw new CommandArgsError(`/${this.token} requires a coordinate: lat,lon`);
   
     try {
       const [lat, lon] = args.split(",").map(Number);
@@ -27,8 +26,8 @@ class TestFilterCommand extends Command {
     }
     catch (err) {
       logger.error("Unable to fetch data", err);
-      if (err instanceof GeoapifyError) 
-        await sendMessage("Unable to fetch Geoapify data", chatId);
+      if (err instanceof GeoapifyError)
+        throw new CommandError("Unable to fetch Geoapify data", err);
     }
   }
 }

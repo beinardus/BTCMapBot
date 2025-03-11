@@ -20,6 +20,28 @@ class JsonataError extends CustomError {
   }
 }
 
+class CommandError extends CustomError {
+  constructor(message, cause) {
+    super(message);
+    this.name = "CommandError";
+    this.cause = cause;
+  }
+}
+
+class CommandAuthError extends CommandError {
+  constructor(message, cause) {
+    super(message, cause);
+    this.name = "CommandAuthError";
+  }
+}
+
+class CommandArgsError extends CommandError {
+  constructor(message, cause) {
+    super(message, cause);
+    this.name = "CommandArgsError";
+  }
+}
+
 const dispatchJsonataError = (err) => {
   throw new JsonataError(err.code, err);
 };
@@ -53,4 +75,4 @@ const dispatchTelegramError = (err) => {
   throw err;
 };
 
-export { dispatchTelegramError, dispatchJsonataError, TelegramError, JsonataError };
+export { dispatchTelegramError, dispatchJsonataError, TelegramError, JsonataError, CommandError, CommandAuthError, CommandArgsError};

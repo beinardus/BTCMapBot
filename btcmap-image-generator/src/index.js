@@ -1,10 +1,11 @@
 import currentModulePaths from 'current-module-paths'
 import express from "express";
+import handlebars from "handlebars";
 import config from "config";
 import {promises as fs} from "fs";
 import puppeteer from "puppeteer";
 import path from "path";
-import { COUNTRY, NAME, TOWN } from "translation";
+import { COUNTRY, NAME, TOWN, UNKNOWN, t } from "translation";
 
 const app = express();
 const PORT = config.get("port");
@@ -22,18 +23,19 @@ const getProcessedHtml = async (state, params) => {
     const filePath = path.join(__dirname, "../templates", fileName);
 
     // Read the template file
-    const template = await fs.readFile(filePath, "utf-8");
+    const template = handlebars.compile(await fs.readFile(filePath, "utf-8"));
+
+    const data = {
+      name: params.name || `(${t(params.lan, UNKNOWN)})`,
+      city: params.city || `(${t(params.lan, UNKNOWN)})`,
+      country: params.country || `(${t(params.lan, UNKNOWN)})`,
+      t_name: t(params.lan, NAME),
+      t_town: t(params.lan, TOWN),
+      t_country: t(params.lan, COUNTRY)
+    }
 
     // Replace placeholders with actual values
-    const processedHtml = template
-      .replace(/\[name\]/g, params.name || "(onbekend)")
-      .replace(/\[city\]/g, params.city || "(onbekend)")
-      .replace(/\[country\]/g, params.country || "(onbekend)")
-      .translate(/\[t_name]/g, params.lan, NAME)
-      .translate(/\[t_town]/g, params.lan, TOWN)
-      .translate(/\[t_country]/g, params.lan, COUNTRY);
-
-    return processedHtml;
+    return template(data);
   }
   catch (error) {
     throw new Error(`Failed to process HTML template: ${error.message}`);
@@ -42,7 +44,7 @@ const getProcessedHtml = async (state, params) => {
 
 // HTTP GET route to handle image creation requests
 app.get("/generate-image", async (req, res) => {
-  const { state, name, city, country } = req.query;
+  const { state, name, city, country, lan } = req.query;
 
   if (!state || !["create", "delete"].includes(state)) 
     return res.status(400).send("Invalid 'state' parameter. Must be 'create' or 'delete'.");
@@ -50,7 +52,7 @@ app.get("/generate-image", async (req, res) => {
 
   try {
     // Generate HTML from the template
-    const htmlContent = await getProcessedHtml(state, { name, city, country });
+    const htmlContent = await getProcessedHtml(state, { name, city, country, lan });
 
     // Launch Puppeteer
     const browser = await puppeteer.launch();

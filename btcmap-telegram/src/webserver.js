@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import { dbmanager } from 'btcmap-database';
 import { handleTextMessage } from './message-handler.js';
 import { logger } from 'btcmap-common';
+import { CommandError } from './error-dispatcher.js';
+import { sendMessage } from './notify.js';
 
 const wsConfig = config.get("webserver");
 const app = express();
@@ -46,8 +48,14 @@ app.post('/webhook', async (req, res) => {
     });
 
     // determine the message type using the properties of the message
-    if (message.text) 
-      await handleTextMessage(message);
+    if (message.text)
+      try {
+        await handleTextMessage(message);
+      }
+      catch (err) {
+        if (err instanceof CommandError)
+          await sendMessage(err.message, chatId);
+      }
 
     res.sendStatus(200);
   }
