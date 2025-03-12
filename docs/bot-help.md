@@ -32,4 +32,12 @@ The following geographic entities can be used in the filter:
 You can find these values for a location by using the `/testfilter` command.
 If you have any questions or encounter issues, feel free to reach out!
 
-Happy filtering! 😊
+📌 **Language settings:**  
+Currently, two languages are supported `nl` and `en`. Feel free to request/add other languages. The language setting only affects the update messages of the locations; commands (including `help`) are kept in English. Language related commands are:
+- `/showlanguage` - Display the current language settings. The default language is set to `en`.
+- `/setlanguage <language>` - Set a new filter. Replace `<language>` with your desired one (e.g., `/setlanguage nl`).
+
+📌 **GitHub:**  
+[github.com/beinardus/BTCMapBot](https://github.com/beinardus/BTCMapBot)
+
+Happy observing! 😊
