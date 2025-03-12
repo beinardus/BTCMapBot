@@ -22,8 +22,8 @@ async function synchronize() {
 
   let data = await btcmap.retrieveData(latestUpdate);
 
-  enrichDataWithTransition(data, latestUpdate)
-  await dbmanager.enrichDataWithActivationStatus(data)  
+  enrichDataWithTransition(data, latestUpdate);
+  await dbmanager.enrichDataWithActivationStatus(data);
   enrichDataWithReportType(data);
 
   await dbmanager.batchUpdateLocations(data);
