@@ -6,13 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
-    "start": "node src/index.js"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "moduleNameMapper": {
-      "^(\\.{1,2}/.*)\\.js$": "$1"
-    }
+    "start": "node src/index.js",
+    "lint": "eslint --config ../eslint.config.js  src/**/*.js tests/**/*.js *.js --fix"
   },
   "author": "",
   "license": "ISC",

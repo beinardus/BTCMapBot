@@ -1,4 +1,4 @@
-import { locationStatus } from 'btcmap-common';
+import { locationStatus } from "btcmap-common";
 
 const createStats = (data) => {
   return data.reduce((a,c) => {

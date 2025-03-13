@@ -1,5 +1,5 @@
-import { html as format } from 'telegram-format';
-import { createWelcomeMessage, createFarewellMessage } from './message-templates.js';
+import { html as format } from "telegram-format";
+import { createWelcomeMessage, createFarewellMessage } from "./message-templates.js";
 import { locationStatus } from "btcmap-common";
 import { UNKNOWN, t } from "translation"
 

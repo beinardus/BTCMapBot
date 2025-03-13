@@ -1,4 +1,4 @@
-const NL = 'nl'
-const EN = 'en'
+const NL = "nl"
+const EN = "en"
 
 export {NL, EN}

@@ -1,6 +1,6 @@
-import { CommandArgsError } from '../../error-dispatcher.js';
-import { sendMessage } from '../../notify.js';
-import { Command } from '../command.js';
+import { CommandArgsError } from "../../error-dispatcher.js";
+import { sendMessage } from "../../notify.js";
+import { Command } from "../command.js";
 
 class SendMessageCommand extends Command {
   async action({args}) {

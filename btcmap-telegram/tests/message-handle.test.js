@@ -5,7 +5,10 @@ import * as roles from "../src/telegram-user-roles.js";
 import { getUserRole } from "../src/telegram-utils.js";
 
 // avoid any reporting to Telegram
-jest.mock('../src/notify.js');
+jest.mock("../src/notify.js");
+
+// avoid access to geoapify
+jest.mock("../../geoapify/index.js");
 
 // manipulate the user role
 jest.mock("../src/telegram-utils.js", () => ({
@@ -26,11 +29,11 @@ const testCases = [
   {cmd: "sendmessage", any: false, admin: false, master: true}
 ]
 
-describe('Test if the action is called if the user is authorized', () => {
+describe("Test if the action is called if the user is authorized", () => {
   test.each(testCases)("$cmd", async ({cmd, any, admin, master}) => {
 
     const actionMock = jest
-      .spyOn(commands[cmd], 'action')
+      .spyOn(commands[cmd], "action")
       .mockResolvedValue(undefined);
 
     const rolesToCheck = [
@@ -54,7 +57,7 @@ describe('Test if the action is called if the user is authorized', () => {
 });
 
 
-describe('Test if the CommandAuth error is thrown is the user is not authorized', () => {
+describe("Test if the CommandAuth error is thrown is the user is not authorized", () => {
   test.each(testCases)("$cmd", async ({cmd, any, admin, master}) => {
     const rolesToCheck = [
       {role: roles.MEMBER, expected: any},

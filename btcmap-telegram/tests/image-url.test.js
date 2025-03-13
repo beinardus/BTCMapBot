@@ -1,19 +1,19 @@
 import { constructImageUrl } from "../src/construct-image-url.js"
 
-describe('image url tests', () => {
+describe("image url tests", () => {
   const data = {
     id: 12505489611,
-    status: 'create',
-    name: 'Dra Ana Paula Mondragon - Ginecologia / Obstetrícia',
-    city: 'Santo André',
-    geo: {country_code: 'br'},
-    user: {language: 'en'}
+    status: "create",
+    name: "Dra Ana Paula Mondragon - Ginecologia / Obstetrícia",
+    city: "Santo André",
+    geo: {country_code: "br"},
+    user: {language: "en"}
   };
 
   const oldUrl = process.env.IMAGE_GENERATOR_URL;
 
   beforeAll(() => {
-    process.env.IMAGE_GENERATOR_URL = 'https://mock.mock/mock';
+    process.env.IMAGE_GENERATOR_URL = "https://mock.mock/mock";
   });
 
   afterAll(() => {

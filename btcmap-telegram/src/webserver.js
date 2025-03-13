@@ -1,18 +1,18 @@
-import express from 'express';
-import config from 'config';
-import bodyParser from 'body-parser';
-import { dbmanager } from 'btcmap-database';
-import { handleTextMessage } from './message-handler.js';
-import { logger } from 'btcmap-common';
-import { CommandError } from './error-dispatcher.js';
-import { sendMessage } from './notify.js';
+import express from "express";
+import config from "config";
+import bodyParser from "body-parser";
+import { dbmanager } from "btcmap-database";
+import { handleTextMessage } from "./message-handler.js";
+import { logger } from "btcmap-common";
+import { CommandError } from "./error-dispatcher.js";
+import { sendMessage } from "./notify.js";
 
 const wsConfig = config.get("webserver");
 const app = express();
 
 function getUserName(chat) {
   switch (chat.type) {
-    case 'private':
+    case "private":
       return chat.username;
     default:
       // supergroup / channel etc.
@@ -24,7 +24,7 @@ function getUserName(chat) {
 app.use(bodyParser.json());
 
 // Telegram webhook route
-app.post('/webhook', async (req, res) => {
+app.post("/webhook", async (req, res) => {
   try {
     const update = req.body;
     logger.debug(`Received update: ${JSON.stringify(update)}`);
@@ -60,7 +60,7 @@ app.post('/webhook', async (req, res) => {
     res.sendStatus(200);
   }
   catch (error) {
-    logger.error('Error processing webhook', error);
+    logger.error("Error processing webhook", error);
     res.sendStatus(500);
   }
 });

@@ -11,11 +11,11 @@ jest.mock("got", () => ({
   }))
 }));
 
-test('The user of a private channel should be creator', async () => {
+test("The user of a private channel should be creator", async () => {
   expect(await getUserRole(21,21)).toBe(userRoles.CREATOR);
 });
 
-test('The master is registered in the .env file', async () => {
+test("The master is registered in the .env file", async () => {
   const envUserId = process.env.BOT_MASTER_ID;
   expect(await getUserRole(envUserId, envUserId)).toBe(userRoles.MASTER);
   
@@ -23,7 +23,7 @@ test('The master is registered in the .env file', async () => {
   expect(await getUserRole(envUserId, notEnvUserId)).toBe(MOCK_ROLE);
 });
 
-describe('check user roles', () => {
+describe("check user roles", () => {
   const testCases = [
     {
       role: userRoles.ADMINISTRATOR, isMaster: false, isAdmin: true
@@ -48,7 +48,7 @@ describe('check user roles', () => {
     }
   ];
   
-  test.each(testCases)('check $role role', ({
+  test.each(testCases)("check $role role", ({
     role,
     isMaster:shouldBeMaster,
     isAdmin:shouldBeAdmin}) => {

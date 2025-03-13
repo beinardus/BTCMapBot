@@ -1,11 +1,11 @@
-import { html as format } from 'telegram-format';
-import { dbmanager } from 'btcmap-database';
+import { html as format } from "telegram-format";
+import { dbmanager } from "btcmap-database";
 import { logger } from "btcmap-common";
-import { getGeo, GeoapifyError } from 'geoapify';
-import { createJsonata } from '../../jsonata.js';
-import { sendMessage } from '../../notify.js';
-import { Command } from '../command.js';
-import { CommandArgsError, CommandError } from '../../error-dispatcher.js';
+import { getGeo, GeoapifyError } from "geoapify";
+import { createJsonata } from "../../jsonata.js";
+import { sendMessage } from "../../notify.js";
+import { Command } from "../command.js";
+import { CommandArgsError, CommandError } from "../../error-dispatcher.js";
 
 class TestFilterCommand extends Command {
   async action({chatId, args}) {

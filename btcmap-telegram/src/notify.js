@@ -1,9 +1,9 @@
-import got from 'got';
-import config from 'config';
+import got from "got";
+import config from "config";
 import { logger } from "btcmap-common";
-import { injectProxy } from 'http-utils';
+import { injectProxy } from "http-utils";
 import dotenv from "dotenv";
-import { dispatchTelegramError } from './error-dispatcher.js';
+import { dispatchTelegramError } from "./error-dispatcher.js";
 
 dotenv.config();
 const telegramConfig = config.get("telegram");
@@ -21,7 +21,7 @@ async function sendMessage(message, chat_id, parse_mode = "html") {
   try {
     const options = injectProxy({
       json: params,
-      responseType: 'json',
+      responseType: "json",
     }, config.get("proxy"));
 
     logger.debug(JSON.stringify(options));
@@ -48,7 +48,7 @@ async function sendNotification(image, message, chat_id, parse_mode = "html") {
   try {
     const options = injectProxy({
       json: params,
-      responseType: 'json',
+      responseType: "json",
     }, config.get("proxy"));
 
     logger.debug(JSON.stringify(options));

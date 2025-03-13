@@ -1,12 +1,12 @@
-import schedule from 'node-schedule';
-import config from 'config';
-import { logger, locationStatus } from 'btcmap-common';
-import { dbmanager } from 'btcmap-database';
-import * as btcmap from './btcmap.js';
-import * as reporter from './zmq-reporter.js'; // or use plain reporter.js
-import { createStats } from './stats.js';
-import { enrichDataWithTransition, enrichDataWithReportType } from './data-interpreter.js';
-import { CustomError } from 'custom-error';
+import schedule from "node-schedule";
+import config from "config";
+import { logger, locationStatus } from "btcmap-common";
+import { dbmanager } from "btcmap-database";
+import * as btcmap from "./btcmap.js";
+import * as reporter from "./zmq-reporter.js"; // or use plain reporter.js
+import { createStats } from "./stats.js";
+import { enrichDataWithTransition, enrichDataWithReportType } from "./data-interpreter.js";
+import { CustomError } from "custom-error";
 
 const JOB_NAME = "synchronize";
 
@@ -66,7 +66,7 @@ async function main() {
   await reporter.setup();
 
   const scheduledJob = schedule.scheduleJob(JOB_NAME, config.get("cron"), async () => await executeJob(JOB_NAME));
-  scheduledJob.on('error', (err) => {
+  scheduledJob.on("error", (err) => {
     logger.debug("gracefulShutdown on job error");
     schedule.gracefulShutdown().then(() => {
       // do not throw before the job is finished!
@@ -78,7 +78,7 @@ async function main() {
   logger.info(`next invocation: ${scheduledJob.nextInvocation()}`);
 }
 
-process.on('SIGINT', function () { 
+process.on("SIGINT", function () { 
   logger.debug("gracefulShutdown on termination");
   schedule.gracefulShutdown()
     .then(() => {
@@ -87,7 +87,7 @@ process.on('SIGINT', function () {
     });
 });
 
-process.on('uncaughtException', (err) => {
+process.on("uncaughtException", (err) => {
   logger.error(err.stack??err);
   logger.debug("exiting with code 1");
   process.exit(1);

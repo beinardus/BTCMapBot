@@ -1,4 +1,4 @@
-jest.mock('../src/message-templates.js', () => {
+jest.mock("../src/message-templates.js", () => {
   return {
     createWelcomeMessage: jest.fn(({name,type,id}) => {
       return `WELCOME: ${name} | ${type} | ${id}`
@@ -10,14 +10,14 @@ jest.mock('../src/message-templates.js', () => {
 });
 
 // do not test the actual translation
-jest.mock('translation', () => ({
+jest.mock("translation", () => ({
   ...jest.requireActual("translation"),
   t: jest.fn((lan, key) => `t(${lan},${key})`)
 }));
 
 import { constructMessage } from "../src/construct-message.js";
 
-describe('constructMessage tests', () => {
+describe("constructMessage tests", () => {
 
   const baseData = {
     id:12552999973,
@@ -40,7 +40,7 @@ describe('constructMessage tests', () => {
       expected: "FAREWELL: (t(en,unknown)) | node | 12552999973",
     }];
   
-  test.each(testCases)('$description', ({input, expected}) => {
+  test.each(testCases)("$description", ({input, expected}) => {
     const actual = constructMessage(input);
     expect(actual).toBe(expected);
   });

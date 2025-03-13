@@ -1,15 +1,15 @@
-import got from 'got';
-import config from 'config';
-import { injectProxy } from 'http-utils';
+import got from "got";
+import config from "config";
+import { injectProxy } from "http-utils";
 import _ from "lodash";
 import dotenv from "dotenv";
-import { dispatchGeoapifyError } from './error-dispatcher.js';
+import { dispatchGeoapifyError } from "./error-dispatcher.js";
 
 dotenv.config();
 const geoapifyConfig = config.get("geoapify");
 
 const constructRequestOptions = () => {
-  return injectProxy({responseType: 'json'}, config.get("proxy"));
+  return injectProxy({responseType: "json"}, config.get("proxy"));
 }
 
 async function getGeo(latitude, longitude) {

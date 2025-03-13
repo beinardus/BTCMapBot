@@ -1,4 +1,4 @@
-import {logger, activationStatus, locationStatus} from 'btcmap-common';
+import {logger, activationStatus, locationStatus} from "btcmap-common";
 
 const getReportType = (assignedStatus, prevStatus, newLocation) => {
   switch (assignedStatus) {

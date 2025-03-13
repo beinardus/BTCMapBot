@@ -1,9 +1,9 @@
-import config from 'config';
-import got from 'got';
+import config from "config";
+import got from "got";
 import dotenv from "dotenv";
-import { injectProxy } from 'http-utils';
-import { logger } from 'btcmap-common';
-import * as roles from './telegram-user-roles.js';
+import { injectProxy } from "http-utils";
+import { logger } from "btcmap-common";
+import * as roles from "./telegram-user-roles.js";
 
 dotenv.config();
 const telegramConfig = config.get("telegram");
@@ -27,14 +27,14 @@ const getUserRole = async (chatId, userId) => {
         chat_id: chatId,
         user_id: userId,
       },
-      responseType: 'json',
-    }, config.get('proxy')));
+      responseType: "json",
+    }, config.get("proxy")));
 
     logger.debug(response.body);
     return response.body.result.status;
   } 
   catch (error) {
-    console.error('Error fetching chat member:', error.message);
+    console.error("Error fetching chat member:", error.message);
     return null;
   }
 };

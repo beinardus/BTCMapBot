@@ -1,7 +1,7 @@
-import { html as format } from 'telegram-format';
-import { sendMessage } from '../../notify.js';
-import { dbmanager } from 'btcmap-database';
-import { Command } from '../command.js';
+import { html as format } from "telegram-format";
+import { sendMessage } from "../../notify.js";
+import { dbmanager } from "btcmap-database";
+import { Command } from "../command.js";
 
 async function listUsers() {
   const users = await dbmanager.getActiveUsers();

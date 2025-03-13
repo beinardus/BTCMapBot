@@ -1,5 +1,5 @@
 import zmq from "zeromq";
-import {logger, locationStatus} from 'btcmap-common';
+import {logger, locationStatus} from "btcmap-common";
 import { getGeo } from "geoapify";
 import config from "config";
 

@@ -1,6 +1,6 @@
-import { dbmanager } from 'btcmap-database';
-import { sendMessage } from '../../notify.js';
-import { Command } from '../command.js';
+import { dbmanager } from "btcmap-database";
+import { sendMessage } from "../../notify.js";
+import { Command } from "../command.js";
 
 class ShowFilterCommand extends Command {
   async action({chatId}) {

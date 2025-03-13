@@ -1,4 +1,4 @@
-import currentModulePaths from 'current-module-paths'
+import currentModulePaths from "current-module-paths"
 import express from "express";
 import handlebars from "handlebars";
 import config from "config";

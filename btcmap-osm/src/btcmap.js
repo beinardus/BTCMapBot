@@ -8,7 +8,7 @@ import { dispatchBTCMapError } from "./error-dispatcher.js";
 const btcmapConfig = config.get("btcmap");
 
 const constructRequestOptions = () => {
-  return injectProxy({responseType: 'json'}, config.get("proxy"));
+  return injectProxy({responseType: "json"}, config.get("proxy"));
 }
 
 const retrieveData = async (date) => {

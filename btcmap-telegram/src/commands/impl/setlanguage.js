@@ -1,8 +1,8 @@
-import { dbmanager } from 'btcmap-database';
+import { dbmanager } from "btcmap-database";
 import { languages } from "translation";
-import { sendMessage } from '../../notify.js';
-import { Command } from '../command.js';
-import { CommandArgsError } from '../../error-dispatcher.js';
+import { sendMessage } from "../../notify.js";
+import { Command } from "../command.js";
+import { CommandArgsError } from "../../error-dispatcher.js";
 
 class SetLanguageCommand extends Command {
   async action({chatId, args}) {

@@ -1,5 +1,5 @@
-import {RequestError} from 'got';
-import config from 'config';
+import {RequestError} from "got";
+import config from "config";
 import { CustomError } from "custom-error";
 
 class BTCMapError extends CustomError {

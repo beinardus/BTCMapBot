@@ -8,7 +8,7 @@ const dates = [
   new Date("2025-01-09T04:01:18.982Z"),
 ]
 
-test('sortOnStamp should bring the most recent date to front and nulls to the back', () => {
+test("sortOnStamp should bring the most recent date to front and nulls to the back", () => {
   const objectsWithDate = dates.map((d,i) => ({ o: i, d:d }));
   sortOnStamp(objectsWithDate, "d");
 

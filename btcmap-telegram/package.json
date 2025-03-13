@@ -6,16 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
-    "start": "node src/index.js"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "moduleNameMapper": {
-      "^(\\.{1,2}/.*)\\.js$": "$1"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!telegram-format/.*)"
-    ]
+    "start": "node src/index.js",
+    "lint": "eslint --config ../eslint.config.js  src/**/*.js tests/**/*.js *.js --fix"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +22,7 @@
     "geoapify": "file:../geoapify",
     "got": "^13.0.0",
     "http-utils": "file:../http-utils",
+    "jest-config": "^29.7.0",
     "js-yaml": "^4.1.0",
     "jsonata": "^2.0.6",
     "telegram-format": "^3.1.0",

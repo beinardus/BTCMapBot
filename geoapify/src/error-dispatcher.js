@@ -1,4 +1,5 @@
-import {RequestError} from 'got';
+import {RequestError} from "got";
+import config from "config";
 import { CustomError } from "custom-error"
 
 class GeoapifyError extends CustomError {

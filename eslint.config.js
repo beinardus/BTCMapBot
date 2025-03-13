@@ -13,7 +13,8 @@ export default [
   pluginJs.configs.recommended,
   {
     rules: {
-      ...jest.configs.recommended.rules,      
+      ...jest.configs.recommended.rules,
+      "quotes": ["error", "double"],
       "curly": ["error", "multi"], // Ensure multi-line if statements break correctly
       "brace-style": ["error", "stroustrup", { allowSingleLine: false }], // Prevent single-line if statements
       "indent": ["error", 2, { "SwitchCase": 1 }], // Enforce 2-space indentation

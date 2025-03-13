@@ -1,6 +1,6 @@
-import {RequestError} from 'got';
-import config from 'config';
-import * as errorCodes from './telegram-error-codes.js';
+import {RequestError} from "got";
+import config from "config";
+import * as errorCodes from "./telegram-error-codes.js";
 import { CustomError } from "custom-error"
 
 class TelegramError extends CustomError {

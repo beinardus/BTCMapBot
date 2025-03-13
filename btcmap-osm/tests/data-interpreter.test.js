@@ -1,7 +1,7 @@
 import { enrichDataWithTransition, enrichDataWithReportType } from "../src/data-interpreter.js";
-import {locationStatus, activationStatus } from 'btcmap-common';
+import {locationStatus, activationStatus } from "btcmap-common";
 
-describe('enrichDataWithTransition tests', () => {
+describe("enrichDataWithTransition tests", () => {
   const latestUpdate = new Date("2025-02-02T22:00:00.000Z");
   const testCases = [
     {
@@ -48,7 +48,7 @@ describe('enrichDataWithTransition tests', () => {
   });
 });
 
-describe('enrichDataWithReportType tests', () => {
+describe("enrichDataWithReportType tests", () => {
   // just testing transition manipulation with some edge cases
   // all state changes are tested in update-logic.test.js
   const testCases = [

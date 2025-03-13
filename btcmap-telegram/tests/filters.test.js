@@ -1,7 +1,7 @@
 import { createJsonata } from "../src/jsonata.js";
 import { JsonataError } from "../src/error-dispatcher.js";
 
-describe('Location filter expression tests', () => {
+describe("Location filter expression tests", () => {
 
   const geo = {
     "country_code":"nl","state":"Gelderland","district":"Matenhoeve","city":"Apeldoorn"

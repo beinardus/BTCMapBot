@@ -2,14 +2,14 @@ import * as languages from "./src/languages.js";
 
 const {NL, EN} = languages;
 
-const WELCOME = 'welcome'
-const GOODBYE = 'goodbye'
-const NAME = 'name'
-const TOWN = 'town'
-const COUNTRY = 'country'
-const UNKNOWN = 'unknown'
-const A_NEW_ONE = 'a new one'
-const AND_GONE = 'and gone'
+const WELCOME = "welcome"
+const GOODBYE = "goodbye"
+const NAME = "name"
+const TOWN = "town"
+const COUNTRY = "country"
+const UNKNOWN = "unknown"
+const A_NEW_ONE = "a new one"
+const AND_GONE = "and gone"
 
 const dictionary = {
   [WELCOME]: {[NL]: "WELKOM", [EN]: "WELCOME"},
@@ -24,9 +24,9 @@ const dictionary = {
 
 const t = (lan, key) => {
   const value = dictionary[key]?.[lan];
-  if (value === undefined) {
+  if (value === undefined) 
     return key;
-  }
+  
 
   return value;
 };

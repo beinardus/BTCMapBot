@@ -1,9 +1,9 @@
-import { dbmanager } from 'btcmap-database';
+import { dbmanager } from "btcmap-database";
 import { logger } from "btcmap-common";
-import { createJsonata } from '../../jsonata.js';
-import { sendMessage } from '../../notify.js';
-import { Command } from '../command.js';
-import { CommandError, CommandArgsError } from '../../error-dispatcher.js';
+import { createJsonata } from "../../jsonata.js";
+import { sendMessage } from "../../notify.js";
+import { Command } from "../command.js";
+import { CommandError, CommandArgsError } from "../../error-dispatcher.js";
 
 class SetFilterCommand extends Command {
   async action({chatId, args}) {

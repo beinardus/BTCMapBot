@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest",
+    "lint": "eslint --config ../eslint.config.js  src/**/*.js tests/**/*.js *.js --fix"
   },
   "jest": {
     "testEnvironment": "node",
