@@ -7,5 +7,6 @@ package-lock.json
 test/*.log
 export/*
 data/database.db
+data/database.sqbpro
 config/local.yml
 .env
