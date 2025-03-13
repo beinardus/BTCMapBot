@@ -33,7 +33,6 @@ async function sendMessage(message, chat_id, parse_mode = "html") {
   }
 }
 
-// Function to send message
 async function sendNotification(image, message, chat_id, parse_mode = "html") {
   const url = `${telegramConfig["api-endpoint"]}sendPhoto`
     .replace("[TELEGRAM_BOT_TOKEN]", process.env.TELEGRAM_BOT_TOKEN);
