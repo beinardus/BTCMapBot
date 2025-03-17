@@ -1,0 +1,43 @@
+{
+  "type": "module",
+  "name": "btcmap-telegram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest",
+    "start": "node src/index.js",
+    "lint": "eslint --config ../eslint.config.js  src/**/*.js tests/**/*.js *.js --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "btcmap-common": "file:../btcmap-common",
+    "btcmap-database": "file:../btcmap-database",
+    "config": "^3.3.12",
+    "custom-error": "file:../custom-error",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "geoapify": "file:../geoapify",
+    "geolib": "^3.3.4",
+    "got": "^13.0.0",
+    "http-utils": "file:../http-utils",
+    "jest-config": "^29.7.0",
+    "js-yaml": "^4.1.0",
+    "jsonata": "^2.0.6",
+    "telegram-format": "^3.1.0",
+    "translation": "file:../translation",
+    "winston": "^3.17.0",
+    "zeromq": "^6.3.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.7",
+    "@eslint/js": "^9.19.0",
+    "@types/jest": "^29.5.14",
+    "eslint": "^9.19.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "globals": "^15.14.0",
+    "jest": "^29.7.0"
+  }
+}

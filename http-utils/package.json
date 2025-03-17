@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "name": "http-utils",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --config ../eslint.config.js  src/**/*.js tests/**/*.js *.js --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "https-proxy-agent": "^7.0.6"
+  }
+}

@@ -1,0 +1,58 @@
+FROM node:18-alpine AS base
+
+# Reusable function for installing a module
+# ============================================
+FROM base AS custom-error
+WORKDIR /usr/custom-error
+COPY ./custom-error/package.json ./
+COPY ./custom-error/index.js ./
+RUN npm install --production
+
+FROM base AS http-utils
+WORKDIR /usr/http-utils
+COPY ./http-utils/package.json ./
+COPY ./http-utils/index.js ./
+RUN npm install --production
+
+FROM base AS btcmap-common
+WORKDIR /usr/btcmap-common
+COPY ./btcmap-common/package.json ./
+COPY ./btcmap-common/src ./src
+COPY ./btcmap-common/index.js ./
+RUN npm install --production
+
+FROM base AS btcmap-database
+WORKDIR /usr/btcmap-database
+COPY ./btcmap-database/package.json ./
+COPY ./btcmap-database/src ./src
+COPY ./btcmap-database/index.js ./
+RUN npm install --production
+
+FROM base AS geoapify
+WORKDIR /usr/geoapify
+COPY ./geoapify/package.json ./
+COPY ./geoapify/src ./src
+COPY ./geoapify/index.js ./
+RUN npm install --production
+
+# Final stage: Pull everything together (using the same base image)
+# ============================================
+FROM base AS builder
+
+WORKDIR /usr
+COPY --from=custom-error /usr/custom-error ./custom-error
+COPY --from=http-utils /usr/http-utils ./http-utils
+COPY --from=btcmap-common /usr/btcmap-common ./btcmap-common
+COPY --from=btcmap-database /usr/btcmap-database ./btcmap-database
+COPY --from=geoapify /usr/geoapify ./geoapify
+
+WORKDIR /usr/btcmap-osm
+COPY ./btcmap-osm/package.json ./
+RUN npm install --production
+
+FROM builder
+
+WORKDIR /usr/btcmap-osm
+COPY ./btcmap-osm/src ./src
+
+CMD ["npm", "start"]

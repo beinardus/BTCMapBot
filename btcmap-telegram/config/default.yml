@@ -1,0 +1,16 @@
+log-level: debug
+proxy: ""
+telegram:
+  # use the token received from BotFather
+  api-endpoint: "https://api.telegram.org/bot[TELEGRAM_BOT_TOKEN]/"
+geoapify:
+  url-fmt: "https://api.geoapify.com/v1/geocode/reverse?lat=[LAT]&lon=[LON]&apiKey=[GEOAPIFY_API_KEY]"
+zmq:
+  # point to the publisher (probably another machine)
+  url: "tcp://btcmap-osm:3000"
+webserver:
+  port: 3000
+database:
+  path: "../data/database.db"
+help:
+  path: "../docs/bot-help.md"

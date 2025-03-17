@@ -1,0 +1,33 @@
+{
+  "type": "module",
+  "name": "btcmap-image-generator",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "lint": "eslint --config ../eslint.config.js  src/**/*.js tests/**/*.js *.js --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "config": "^3.3.12",
+    "current-module-paths": "^1.1.2",
+    "express": "^4.21.2",
+    "handlebars": "^4.7.8",
+    "js-yaml": "^4.1.0",
+    "puppeteer": "^24.1.0",
+    "translation": "file:../translation"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.7",
+    "@eslint/js": "^9.19.0",
+    "@types/jest": "^29.5.14",
+    "babel-jest": "^29.7.0",
+    "eslint": "^9.19.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "globals": "^15.14.0",
+    "jest": "^29.7.0"
+  }
+}

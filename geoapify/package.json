@@ -1,0 +1,22 @@
+{
+  "type": "module",
+  "name": "geoapify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --config ../eslint.config.js  src/**/*.js tests/**/*.js *.js --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "config": "^3.3.12",
+    "custom-error": "file:../custom-error",
+    "dotenv": "^16.4.7",
+    "got": "^13.0.0",
+    "http-utils": "file:../http-utils",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
+  }
+}

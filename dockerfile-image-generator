@@ -1,0 +1,33 @@
+FROM canardconfit/puppeteer-docker:latest AS base
+
+FROM base AS btcmap-common
+WORKDIR /usr/btcmap-common
+COPY ./btcmap-common/package.json ./
+COPY ./btcmap-common/src ./src
+COPY ./btcmap-common/index.js ./
+RUN npm install --production
+
+FROM base AS translation
+WORKDIR /usr/translation
+COPY ./translation/package.json ./
+COPY ./translation/src ./src
+COPY ./translation/index.js ./
+RUN npm install --production
+
+# Final stage: Pull everything together (using the same base image)
+# ============================================
+FROM base AS builder
+
+WORKDIR /usr
+COPY --from=btcmap-common /usr/btcmap-common ./btcmap-common
+COPY --from=translation /usr/translation ./translation
+
+WORKDIR /usr/btcmap-image-generator
+COPY ./btcmap-image-generator/package.json ./
+RUN npm install --production
+
+FROM builder
+WORKDIR /usr/btcmap-image-generator
+COPY ./btcmap-image-generator/src ./src
+
+CMD ["npm", "start"]

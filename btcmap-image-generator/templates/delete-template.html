@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            @font-face {
+                font-family: Manrope;
+                src: url(Manrope-Regular.ttf) format("truetype")
+            }
+
+            body {
+                width: 645px; 
+                height: 275px;
+                background-color: #e4ebec;
+                font-family: Manrope,sans-serif;
+                font-size: 25px;
+                line-height: 30px;
+                color: #144046;
+            }
+
+            div {
+                width: 100%;
+                padding: 0px 5px 0px 25px;
+            }
+
+            table {
+                margin-top: 20px;
+                width: 100%;
+            }
+
+            th {
+                width: 0px;
+                text-align: right;
+                vertical-align: top;
+                padding-right: 10px;
+                font-weight: 600;
+            }
+
+            td {
+                font-weight: 100;
+            }
+
+            .banner {
+                width: 100%;
+            }
+
+            .emoji {
+                display: block;
+                position: absolute;
+                left: 350px;
+                top: 18px;
+                scale: 0.9;
+            }
+
+            h1 {
+                margin-top: -10px;
+                margin-left: 80px;
+                text-align: left;
+                font-size: 30px;
+                font-weight: 600;
+                color: #0099AF;
+            }
+
+        </style>        
+    </head>
+
+    <body>
+        <img src="btcmap-banner.svg">
+        <h1>{{t_gone}}</h1>
+        <img class="emoji" src="face-screaming-in-fear_1f631.png">        
+        <div>
+            <table>
+                <tr>
+                    <th>{{t_name}}:</th><td>{{name}}</td>
+                </tr>
+                <tr>
+                    <th>{{t_town}}:</th><td>{{city}}</td>
+                </tr>
+                <tr>
+                    <th>{{t_country}}:</th><td>{{country}}</td>
+                </tr>
+            </table>            
+        </div>        
+    </body>
+</html>

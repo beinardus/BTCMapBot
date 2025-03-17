@@ -1,0 +1,9 @@
+log-level: debug
+proxy: "" #"http://127.0.0.1:8888"
+webserver:
+  port: 3001
+zmq:
+  # point to the publisher (probably another machine)
+  # url: "tcp://192.168.2.105:3030"
+  url: "tcp://dutchbtc.ddns.net:3030"
+  #url: "tcp://127.0.0.1:3000"

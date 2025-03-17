@@ -1,0 +1,5 @@
+screenshot-type: "png" #"jpeg"
+content-type: "image/png"  #"image/jpeg"
+viewport-width: 645
+viewport-height: 275
+port: 3000
