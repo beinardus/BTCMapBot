@@ -4,11 +4,11 @@ This bot tracks the create and delete events of locations (merchants) on [BTCMap
 
 Here’s how you can interact with this bot:
 
-📌 **General Commands:**
+📌 *General Commands:*
 - `/start` - Begin interacting with the bot or restart the session.
 - `/help` - Show this help message.
 
-📌 **Filter Management Commands:**
+📌 *Filter Management Commands:*
 - `/showfilter` - Display the current filter settings.
 - `/setfilter <criteria>` - Set a new filter. Replace `<criteria>` with your desired filter settings (e.g., `/setfilter country_code = 'nl'`).
 - `/testfilter <coordinate>` - Test the configured filter against a sample input. Replace `<coordinate>` with the lat-lon coordinate you want to test (e.g., `/testfilter 52.564236,4.738703`).
@@ -30,18 +30,18 @@ The following geographic entities can be used in the filter:
 - `lon`
 - `country_code`
 - `state`
-- `municipality`
+- `district`
 - `city`
 
 You can find these values for a location by using the `/testfilter` command.
 If you have any questions or encounter issues, feel free to reach out!
 
-📌 **Language settings:**  
+📌 *Language settings:*  
 Currently, two languages are supported `nl` and `en`. Feel free to request/add other languages. The language setting only affects the update messages of the locations; commands (including `help`) are kept in English. Language related commands are:
 - `/showlanguage` - Display the current language settings. The default language is set to `en`.
 - `/setlanguage <language>` - Set a new filter. Replace `<language>` with your desired one (e.g., `/setlanguage nl`).
 
-📌 **GitHub:**  
+📌 *GitHub:*  
 [github.com/beinardus/BTCMapBot](https://github.com/beinardus/BTCMapBot)
 
 Happy observing! 😊
