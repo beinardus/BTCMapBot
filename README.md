@@ -37,7 +37,7 @@ This service implements the Telegram bot. Telegram channels that register the bo
 This service is a listener to the `zmq` interface provided by `btcmap-osm`. Each update is checked against the channel's filter and send to said channel if there is a match.
 
 ### Tamed JSONata
-The `btcmap-telegram` bot uses `JSONata` as the engine for filtering locations. This engine is very powerful but lacks type checking and most validations will be performed at the moment input data is tested (`evaluate`), not during the compilation of the query. The actual filter is applied in the background process, so any user feedback of errors happening at that stage are practically infeasable. Therefore the engine is crippled by a pre-compilation step (`validateAST`):
+The `btcmap-telegram` bot uses `JSONata` as the engine for filtering locations. This engine is very powerful but lacks type checking and most validations will be performed at the moment input data is tested (`evaluate`), not during the compilation of the query. The actual filter is applied in the background process, so providing user feedback of errors happening at that stage is practically infeasable. Therefore the engine is crippled by a pre-compilation step (`validateAST`):
 - Right hand side array comparison using the `=` operator is prohibited.
 - Custom function calls are checked on the number of attributes passes to it.
 - Custom functions (like `$distance`) only take literal values for its parameters.

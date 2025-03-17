@@ -3,10 +3,8 @@
 coverage/
 node_modules/
 npm-debug.log
-package-lock.json
-test/*.log
-export/*
+**/package-lock.json
 data/database.db
 data/database.sqbpro
-config/local.yml
+**/config/local.yml
 .env
