@@ -36,6 +36,15 @@ A public `zmq` service is provided on:
 This service implements the Telegram bot. Telegram channels that register the bot can customize their report filter based on the properties of the location. See the `/help` command of the bot.
 This service is a listener to the `zmq` interface provided by `btcmap-osm`. Each update is checked against the channel's filter and send to said channel if there is a match.
 
+### Tamed JSONata
+The `btcmap-telegram` bot uses `JSONata` as the engine for filtering locations. This engine is very powerful but lacks type checking and most validations will be performed at the moment input data is tested (`evaluate`), not during the compilation of the query. The actual filter is applied in the background process, so any user feedback of errors happening at that stage are practically infeasable. Therefore the engine is crippled by a pre-compilation step (`validateAST`):
+- Right hand side array comparison using the `=` operator is prohibited.
+- Custom function calls are checked on the number of attributes passes to it.
+- Custom functions (like `$distance`) only take literal values for its parameters.
+- Custom function parameters are type checked.
+
+If, despite of these precautions, the filter function fails during runtime, an error is silently logged, and the result is assumed to be a mismatch.
+
 ## btcmap-image-generator
 This service is used to provide the images for the Telegram notification's `photo` property. It uses `puppeteer` to convert an HTML page to a `png` image.
 
