@@ -45,6 +45,9 @@ The `btcmap-telegram` bot uses `JSONata` as the engine for filtering locations. 
 
 If, despite of these precautions, the filter function fails during runtime, an error is silently logged, and the result is assumed to be a mismatch.
 
+⚠️ **Important:**  
+Grant the bot admin rights to allow it to post in a Telegram channel as only admins are allowed to post in a channel. There are no additional rights required for posting in other types of chats (group / private).
+
 ## btcmap-image-generator
 This service is used to provide the images for the Telegram notification's `photo` property. It uses `puppeteer` to convert an HTML page to a `png` image.
 
@@ -136,3 +139,6 @@ The current logic allows starting with an empty database.
 Updates are not as accurate as working with a fully synchronized database: Revival of a location is not reported. To start with a synchronized database, use the scripts from the `btcmap-osm/tooling` directory:
 - `retrieve-osm-data`: read locations with the property `currency:XBT` from OSM
 - `initial-fill-db`: create and fill a database from the result of `retrieve-osm-data`.
+
+## Testing
+Instructions on how to run the unit tests can be found [here](./tests.md).
