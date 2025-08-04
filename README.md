@@ -134,7 +134,7 @@ Install and configure `nginx` to forward the webhook calls of Telegram to `btcma
 
 Add a port forward on the router to the server to let Telegram reach your webhook url.
 
-# Initialize the database
+## Initialize the database
 The current logic allows starting with an empty database.
 Updates are not as accurate as working with a fully synchronized database: Revival of a location is not reported. To start with a synchronized database, use the scripts from the `btcmap-osm/tooling` directory:
 - `retrieve-osm-data`: read locations with the property `currency:XBT` from OSM
