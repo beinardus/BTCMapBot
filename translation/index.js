@@ -10,6 +10,8 @@ const COUNTRY = "country"
 const UNKNOWN = "unknown"
 const A_NEW_ONE = "a new one"
 const AND_GONE = "and gone"
+const ALSO_CREATED = "also created"
+const ALSO_DELETED = "also deleted"
 
 const dictionary = {
   [WELCOME]: {[NL]: "WELKOM", [EN]: "WELCOME"},
@@ -19,7 +21,9 @@ const dictionary = {
   [COUNTRY]: {[NL]: "land", [EN]: "country" },
   [UNKNOWN]: {[NL]: "onbekend", [EN]: "unknown" },
   [A_NEW_ONE]: {[NL]: "Een nieuwe!!", [EN]: "A new one!!"},
-  [AND_GONE]: {[NL]: "Aaand it's gone!?!", [EN]: "Aaand it's gone!?!"}
+  [AND_GONE]: {[NL]: "Aaand it's gone!?!", [EN]: "Aaand it's gone!?!"},
+  [ALSO_CREATED]: {[NL]: "Ook aangemaakt zijn:", [EN]: "Also created are:"},
+  [ALSO_DELETED]: {[NL]: "Ook verwijderd zijn:", [EN]: "Also deleted are:"},
 }
 
 const t = (lan, key) => {
@@ -35,4 +39,4 @@ String.prototype.translate = function(search, lan, key) {
   return this.replace(search, t(lan, key));
 };
 
-export {languages, WELCOME, GOODBYE, NAME, TOWN, COUNTRY, UNKNOWN, A_NEW_ONE, AND_GONE, t}
+export {languages, WELCOME, GOODBYE, NAME, TOWN, COUNTRY, UNKNOWN, A_NEW_ONE, AND_GONE, ALSO_CREATED, ALSO_DELETED, t}

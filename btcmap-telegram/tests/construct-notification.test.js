@@ -46,3 +46,31 @@ describe("constructMessage tests", () => {
   });
 
 });
+
+import { constructFloodingText } from "../src/construct-flooding-text.js";
+
+describe("constructFloodingText tests", () => {
+
+  const floodingArray = [{
+    id: 1,
+    name: "n1",
+    type: "node",
+    status: "create"
+  },{
+    id: 2,
+    name: "n2",
+    type: "node",
+    status: "delete"
+  },{
+    id: 3,
+    name: "n3",
+    type: "node",
+    status: "create"
+  }];
+
+  test("constructed text should be expected html", () => {
+    const expected = "<strong>t(en,also created)<strong><br>WELCOME: n1 | node | 1<br>WELCOME: n3 | node | 3<br><br><strong>t(en,also deleted)<strong><br>FAREWELL: n2 | node | 2"
+    const actual = constructFloodingText(floodingArray, {language:"en"});
+    expect(actual).toBe(expected);
+  });
+});
