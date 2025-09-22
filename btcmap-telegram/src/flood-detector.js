@@ -33,9 +33,8 @@ class FloodDetector {
 
     const sendFloodWrapper = async () => {
       this.buffers.delete(recipient.id);
-      if (buffer.overflow.length > 0) 
+      if (buffer.overflow.length > 0)
         await sendFlood(recipient, buffer.overflow);
-      
     };
 
     if (buffer.count < this.threshold) 

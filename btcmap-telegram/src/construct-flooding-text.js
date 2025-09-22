@@ -1,5 +1,5 @@
 import { locationStatus } from "btcmap-common";
-import { createWelcomeNotificationText, createFarewellNotificationText } from "./notification-templates.js";
+import { createWelcomeNotificationFloodText, createFarewellNotificationFloodText } from "./notification-templates.js";
 import { ALSO_CREATED, ALSO_DELETED, t } from "translation"
 
 function constructFloodingText(dataArray, user) {
@@ -9,11 +9,11 @@ function constructFloodingText(dataArray, user) {
     return a;
   }, {});
 
-  const created = grouped[locationStatus.CREATE];
-  const welcomeText = created.map(data => createWelcomeNotificationText({...data, user})).join("\n");
+  const created = grouped[locationStatus.CREATE] || [];
+  const welcomeText = created.map(data => createWelcomeNotificationFloodText({...data, user})).join("\n");
 
-  const deleted = grouped[locationStatus.DELETE]
-  const goodbyeText = deleted.map(data => createFarewellNotificationText({...data, user})).join("\n");
+  const deleted = grouped[locationStatus.DELETE] || [];
+  const goodbyeText = deleted.map(data => createFarewellNotificationFloodText({...data, user})).join("\n");
 
   let message = "";
   if (created.length)

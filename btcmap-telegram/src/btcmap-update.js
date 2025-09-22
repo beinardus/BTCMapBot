@@ -16,30 +16,41 @@ const handleBtcMapUpdate = async (data) => {
   await notifyRecipients(recipients, data);
 };
 
+const sendDirect = async (recipient, data) => {
+  const imageUrl = constructNotificationImageUrl({...data, user: recipient});
+  const message = constructNotificationText({...data, user: recipient});
+  try {
+    await sendNotification(imageUrl, message, recipient.id);
+  }
+  catch (err) {
+    await handleNotificationError(err, recipient.id);
+    throw err;
+  }
+};
+
+const sendFlood = async (recipient, dataArray) => {
+  const message = constructFloodingText(dataArray, recipient);
+  try {
+    await sendMessage(message, recipient.id);
+  }
+  catch (err) {
+    await handleNotificationError(err, recipient.id);
+    throw err;
+  } 
+};  
+
+const sendFloodOrDirect = async (recipient, dataArray) => {
+  // if only one message, send direct to avoid "flood" message for single update
+  if (dataArray.length === 1) 
+    await sendDirect(recipient, dataArray[0]);
+  else 
+    await sendFlood(recipient, dataArray);
+};
+
 const floodProtectedSend = async (recipient, data) => {
   floodDetector.detectFlooding(recipient, data, 
-    async (r, data) => {
-      const imageUrl = constructNotificationImageUrl({...data, user: r});
-      const message = constructNotificationText({...data, user: r});
-
-      try {
-        await sendNotification(imageUrl, message, r.id);
-      }
-      catch (err) {
-        await handleNotificationError(err, r.id);
-        throw err;
-      }
-    }, 
-    async (r, dataArray) => {
-      const message = constructFloodingText(dataArray, r);
-      try {
-        await sendMessage(message, r.id);
-      }
-      catch (err) {
-        await handleNotificationError(err, r.id);
-        throw err;
-      } 
-    });
+    sendDirect,
+    sendFloodOrDirect);
 }
 
 const notifyRecipients = async (recipients, data) => {

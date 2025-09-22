@@ -5,6 +5,12 @@ jest.mock("../src/notification-templates.js", () => {
     }),
     createFarewellNotificationText: jest.fn(({name,type,id}) => {
       return `FAREWELL: ${name} | ${type} | ${id}`
+    }),
+    createWelcomeNotificationFloodText: jest.fn(({name,type,id}) => {
+      return `WELCOME: ${name} | ${type} | ${id}`
+    }),
+    createFarewellNotificationFloodText: jest.fn(({name,type,id}) => {
+      return `FAREWELL: ${name} | ${type} | ${id}`
     })
   };
 });
@@ -69,7 +75,7 @@ describe("constructFloodingText tests", () => {
   }];
 
   test("constructed text should be expected html", () => {
-    const expected = "<strong>t(en,also created)<strong><br>WELCOME: n1 | node | 1<br>WELCOME: n3 | node | 3<br><br><strong>t(en,also deleted)<strong><br>FAREWELL: n2 | node | 2"
+    const expected = "<strong>t(en,also created)</strong>\nWELCOME: n1 | node | 1\nWELCOME: n3 | node | 3\n\n<strong>t(en,also deleted)</strong>\nFAREWELL: n2 | node | 2"
     const actual = constructFloodingText(floodingArray, {language:"en"});
     expect(actual).toBe(expected);
   });
