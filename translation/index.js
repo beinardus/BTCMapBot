@@ -16,9 +16,9 @@ const ALSO_DELETED = "also deleted"
 const dictionary = {
   [WELCOME]: {[NL]: "WELKOM", [EN]: "WELCOME"},
   [GOODBYE]: {[NL]: "VAARWEL", [EN]: "GOODBYE"},
-  [NAME]: {[NL]: "naam", [EN]: "name" },
-  [TOWN]: {[NL]: "plaats", [EN]: "town" },
-  [COUNTRY]: {[NL]: "land", [EN]: "country" },
+  [NAME]: {[NL]: "Naam", [EN]: "Name" },
+  [TOWN]: {[NL]: "Plaats", [EN]: "Town" },
+  [COUNTRY]: {[NL]: "Land", [EN]: "Country" },
   [UNKNOWN]: {[NL]: "onbekend", [EN]: "unknown" },
   [A_NEW_ONE]: {[NL]: "Een nieuwe!!", [EN]: "A new one!!"},
   [AND_GONE]: {[NL]: "Aaand it's gone!?!", [EN]: "Aaand it's gone!?!"},

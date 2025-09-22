@@ -26,14 +26,23 @@
                 color: #144046;
             }
 
-            div {
+            .outer-container {
                 width: 100%;
                 padding: 0px 5px 0px 25px;
             }
 
             table {
-                margin-top: 20px;
+                margin-top: 10px;
                 width: 100%;
+            }
+
+            .header table {
+                border-collapse: collapse;
+            }
+
+            .header table td {
+                margin: 0px;
+                padding: 0px;
             }
 
             th {
@@ -48,35 +57,55 @@
                 font-weight: 100;
             }
 
-            .banner {
-                width: 100%;
-            }
-
             .emoji {
                 display: block;
                 position: absolute;
-                left: 300px;
-                top: 18px;
+                left: 400px;
+                top: 10px;
                 scale: 0.9;
             }
 
-            h1 {
-                margin-top: -10px;
-                margin-left: 80px;
-                text-align: left;
+            .title {
                 font-size: 30px;
                 font-weight: 600;
                 color: #0099AF;
+            }
+
+            .title div {
+                margin-top: -10px;
+                z-index: 2;
+            }
+
+            .logo {
+                width: 80px;
+            }
+
+            .logo img {
+                height: 90px;
             }
 
         </style>
     </head>
 
     <body>
-        <img class="banner" src="btcmap-banner.svg">
-        <h1>{{t_new}}</h1>
+        <div class="header outer-container">
+            <table>
+                <tr>
+                    <td rowspan="2" class="logo">
+                        <img src="logo.svg">
+                    </td>
+                    <td>
+                        <img src="header.svg">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title"><div>{{t_new}}</div></td>
+                </tr>
+            </table>
+        </div>        
         <img class="emoji" src="party-popper_1f389.png">
-        <div>
+        
+        <div class="outer-container">
             <table>
                 <tr>
                     <th>{{t_name}}:</th><td>{{name}}</td>

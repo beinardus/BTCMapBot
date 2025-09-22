@@ -15,7 +15,8 @@ async function sendMessage(message, chat_id, parse_mode = "html") {
   const params = {
     chat_id: chat_id,
     text: message,
-    parse_mode: parse_mode
+    parse_mode: parse_mode,
+    disable_web_page_preview: true
   };
 
   try {
@@ -41,7 +42,8 @@ async function sendNotification(image, message, chat_id, parse_mode = "html") {
     chat_id: chat_id,
     photo: image,
     caption: message,
-    parse_mode: parse_mode
+    parse_mode: parse_mode,
+    disable_web_page_preview: true
   };
 
   try {
