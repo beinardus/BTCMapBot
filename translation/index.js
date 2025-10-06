@@ -22,8 +22,8 @@ const dictionary = {
   [UNKNOWN]: {[NL]: "onbekend", [EN]: "unknown" },
   [A_NEW_ONE]: {[NL]: "Een nieuwe!!", [EN]: "A new one!!"},
   [AND_GONE]: {[NL]: "Aaand it's gone!?!", [EN]: "Aaand it's gone!?!"},
-  [ALSO_CREATED]: {[NL]: "Ook heet ik welkom:", [EN]: "Also welcome to:"},
-  [ALSO_DELETED]: {[NL]: "Ook neem ik afscheid van:", [EN]: "Also farewell to:"},
+  [ALSO_CREATED]: {[NL]: "Tevens welkom:", [EN]: "Also welcome to:"},
+  [ALSO_DELETED]: {[NL]: "Tevens vaarwel:", [EN]: "Also farewell to:"},
 }
 
 const t = (lan, key) => {
