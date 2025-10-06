@@ -2,7 +2,7 @@ import got from "got";
 import config from "config";
 import { logger } from "btcmap-common";
 import { injectProxy } from "http-utils";
-import { latLonFromOSM } from "./osm-utils.js";
+import { typeAndIdFromOSM } from "./osm-utils.js";
 import { dispatchBTCMapError } from "./error-dispatcher.js";
 
 const btcmapConfig = config.get("btcmap");
@@ -20,11 +20,11 @@ const retrieveData = async (date) => {
     const response = await got.get(url, constructRequestOptions());
 
     const data = response.body.map(n => ({
-      type: n.osm_json.type,
-      ...latLonFromOSM(n.osm_json),
-      id: n.osm_json.id,
-      city: n.osm_json.tags?.["addr:city"],
-      name: n.osm_json.tags?.["name"],
+      ...typeAndIdFromOSM(n.osm_id),
+      lat: n.lat,
+      lon: n.lon,
+      city: n["osm:addr:city"],
+      name: n["osm:name"],
       created_at: n.created_at,
       updated_at: n.updated_at,
       deleted_at: n.deleted_at

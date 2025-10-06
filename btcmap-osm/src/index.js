@@ -3,7 +3,8 @@ import config from "config";
 import { logger, locationStatus } from "btcmap-common";
 import { dbmanager } from "btcmap-database";
 import * as btcmap from "./btcmap.js";
-import * as reporter from "./zmq-reporter.js"; // or use plain reporter.js
+import * as reporter from "./zmq-reporter.js"; // or use plain reporter.js for debugging
+//import * as reporter from "./reporter.js";
 import { createStats } from "./stats.js";
 import { enrichDataWithTransition, enrichDataWithReportType } from "./data-interpreter.js";
 import { CustomError } from "custom-error";
@@ -62,7 +63,7 @@ async function executeJob(jobName) {
 }
 
 async function main() {
-  logger.info("BTCMap synchronizer v1.1 started");
+  logger.info("BTCMap synchronizer v1.2 started");
   await reporter.setup();
 
   const scheduledJob = schedule.scheduleJob(JOB_NAME, config.get("cron"), async () => await executeJob(JOB_NAME));

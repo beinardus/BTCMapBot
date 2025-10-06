@@ -1,4 +1,4 @@
-import * as locationStatus from "./location-status.js"
+import { locationStatus } from "btcmap-common";
 import { getGeo } from "geoapify";
 
 const report = async (status, l) => {
@@ -8,13 +8,17 @@ const report = async (status, l) => {
     case locationStatus.CREATE:
       console.log(`A new location found: ${l.name}
 city: ${l.city}
-country: ${geo.country_code}`);
+country: ${geo.country_code}
+osm type: ${l.type},
+osm id: ${l.id}`);
       break;
 
     case locationStatus.DELETE:
       console.log(`A location is deleted: ${l.name}
 city: ${l.city}
-country: ${geo.country_code}`);
+country: ${geo.country_code}
+osm type: ${l.type},
+osm id: ${l.id}`);
       break;
 
     default:

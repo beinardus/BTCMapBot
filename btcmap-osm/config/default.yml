@@ -6,7 +6,9 @@ database:
   path: "../data/database.db" 
 btcmap:
   # ZULU is substituted in code
-  url-fmt: "https://api.btcmap.org/v2/elements?updated_since=[ZULU]&limit=5000"
+  url-fmt: "https://api.btcmap.org/v4/places\
+    ?fields=osm:addr:city,osm:name,lat,lon,osm_id,created_at,updated_at,deleted_at\
+    &updated_since=[ZULU]&include_deleted=true"
 geoapify:
   url-fmt: "https://api.geoapify.com/v1/geocode/reverse?lat=[LAT]&lon=[LON]&apiKey=[GEOAPIFY_API_KEY]"
 zmq:

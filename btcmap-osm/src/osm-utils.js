@@ -20,4 +20,9 @@ const latLonFromOSM = (l) => {
   };
 }
 
-export {latLonFromOSM};
+const typeAndIdFromOSM = (osmId) => {
+  const [type, id] = osmId.split(":");
+  return {type, id};
+};
+
+export {latLonFromOSM, typeAndIdFromOSM};
