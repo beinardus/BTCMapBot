@@ -66,6 +66,9 @@ const dispatchTelegramError = (err) => {
         if (errorMessage?.match(/bot was blocked by the user/))
           throw new TelegramError("Bot blocked", err, errorCodes.INVALID_CHAT);
 
+        if (errorMessage?.match(/bot was kicked from the supergroup chat/))
+          throw new TelegramError("Bot removed from supergroup", err, errorCodes.INVALID_CHAT);
+
         if (errorMessage?.match(/bot is not a member of the channel chat/))
           throw new TelegramError("Bot removed from channel", err, errorCodes.INVALID_CHAT);
         break;
