@@ -7,8 +7,8 @@ import { getUserRole } from "../src/telegram-utils.js";
 // avoid any reporting to Telegram
 jest.mock("../src/notify.js");
 
-// avoid access to geoapify
-jest.mock("../../geoapify/index.js");
+// avoid access to nominatim
+jest.mock("../../nominatim/index.js");
 
 // manipulate the user role
 jest.mock("../src/telegram-utils.js", () => ({

@@ -75,7 +75,7 @@ Minimal version to copy
 ├── custom-error
 │   ├── package.json
 │   ├── index.js
-├── geoapify
+├── nominatim
 │   ├── src
 │   ├── package.json
 │   ├── index.js

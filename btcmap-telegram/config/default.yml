@@ -5,6 +5,10 @@ telegram:
   api-endpoint: "https://api.telegram.org/bot[TELEGRAM_BOT_TOKEN]/"
 geoapify:
   url-fmt: "https://api.geoapify.com/v1/geocode/reverse?lat=[LAT]&lon=[LON]&apiKey=[GEOAPIFY_API_KEY]"
+nominatim:
+  url-fmt: "https://nominatim.openstreetmap.org/reverse?lat=[LAT]&lon=[LON]&format=json&addressdetails=1&extratags=1&zoom=18"
+  user-agent: "BTCMapBot/1.0 (+https://github.com/beinardus/BTCMapBot)"
+  throttle: 1000
 zmq:
   # point to the publisher (probably another machine)
   url: "tcp://btcmap-osm:3000"

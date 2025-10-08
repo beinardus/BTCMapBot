@@ -1,7 +1,7 @@
 import { html as format } from "telegram-format";
 import { dbmanager } from "btcmap-database";
 import { logger } from "btcmap-common";
-import { getGeo, GeoapifyError } from "geoapify";
+import { getGeo, NominatimError } from "nominatim";
 import { createJsonata } from "../../jsonata.js";
 import { sendMessage } from "../../notify.js";
 import { Command } from "../command.js";
@@ -29,8 +29,8 @@ class TestFilterCommand extends Command {
     }
     catch (err) {
       logger.error("Unable to fetch data", err);
-      if (err instanceof GeoapifyError)
-        throw new CommandError("Unable to fetch Geoapify data", err);
+      if (err instanceof NominatimError)
+        throw new CommandError("Unable to fetch Nominatim data", err);
     }
   }
 }

@@ -20,6 +20,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "geoapify": "file:../geoapify",
+    "nominatim": "file:../nominatim",
     "geolib": "^3.3.4",
     "got": "^13.0.0",
     "http-utils": "file:../http-utils",
