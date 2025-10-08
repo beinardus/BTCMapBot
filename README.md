@@ -10,7 +10,7 @@ The service is split into 3 parts (3 Docker containers)
 It is not recommended to run your own bot. Instead, register to the running bot on Telegram:
 [t.me/ST599HMhfbHm_bot](https://t.me/ST599HMhfbHm_bot)
 
-Launching your own bot will increase the data load on [BTCMap.org](https://btcmap.org/) and [Geoapify](https://www.geoapify.com/).
+Launching your own bot will increase the data load on [BTCMap.org](https://btcmap.org/) and [Nominatim](https://nominatim.org/).
 
 However, you can decide to make use of the `btcmap-osm` `zmq` (ZeroMQ) interface and build your own bot on top of that.
 
