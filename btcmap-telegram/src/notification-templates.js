@@ -17,17 +17,17 @@ const createFarewellNotificationText = (props) => {
 };
 
 const createWelcomeNotificationFloodText = (props) => {
-  const {name, city: propCity, geo: {city: geoCity, country_code}} = props;
-  const city = propCity || geoCity;
+  const {name, city: propCity, geo: {city: geoCity, town: geoTown, village: village, country_code}} = props;
+  const town = propCity || geoCity || geoTown || village;
 
-  return `${name}, ${city} (${country_code}) ${createWelcomeUrl(props)}`;
+  return `${name}, ${town} (${country_code}) ${createWelcomeUrl(props)}`;
 };
     
 const createFarewellNotificationFloodText = (props) => {
-  const {name, city: propCity, geo: {city: geoCity, country_code}} = props;
-  const city = propCity || geoCity;
+  const {name, city: propCity, geo: {city: geoCity, town: geoTown, village: village, country_code}} = props;
+  const town = propCity || geoCity || geoTown || village;
 
-  return `${name}, ${city} (${country_code}) ${createFarewellUrl(props)}`;
+  return `${name}, ${town} (${country_code}) ${createFarewellUrl(props)}`;
 };
 
 export { createWelcomeNotificationText, createFarewellNotificationText, createWelcomeNotificationFloodText, createFarewellNotificationFloodText}

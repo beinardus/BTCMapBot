@@ -1,6 +1,6 @@
 import zmq from "zeromq";
 import {logger, locationStatus} from "btcmap-common";
-import { getGeo } from "geoapify";
+import { getGeo } from "nominatim";
 import config from "config";
 
 const zmqConfig = config.get("zmq");

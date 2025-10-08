@@ -19,6 +19,7 @@
     "custom-error": "file:../custom-error",
     "dotenv": "^16.4.7",
     "geoapify": "file:../geoapify",
+    "nominatim": "file:../nominatim",
     "got": "^13.0.0",
     "http-utils": "file:../http-utils",
     "js-yaml": "^4.1.0",

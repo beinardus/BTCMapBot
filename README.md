@@ -16,7 +16,7 @@ However, you can decide to make use of the `btcmap-osm` `zmq` (ZeroMQ) interface
 
 ## btcmap-osm
 This service makes use of the logging API of BTCMap, but implements a full lifetime cycle of locations (create -> update -> delete -> create), where BTCMap only provides a one time `create` event and multiple `delete` and `update` events.
-Updates are broadcasted to `zmq` listeners. Data is send using JSON. Use the `status` in the message to handle it. Before the data is send, it is enriched with geographical properties using the `Reverse Geocoding API` of [https://www.geoapify.com/](Geoapify) based on the `lat` and `lon` properties:
+Updates are broadcasted to `zmq` listeners. Data is send using JSON. Use the `status` in the message to handle it. Before the data is send, it is enriched with geographical properties using the `reverse` API endpoint of [Nominatim](https://nominatim.org/) based on the `lat` and `lon` properties:
 
 |property|description|
 |---|---|
@@ -24,7 +24,7 @@ Updates are broadcasted to `zmq` listeners. Data is send using JSON. Use the `st
 | status | `create` or `delete` |
 | name | name of the location |
 | city | city as described by OSM tags |
-| geo | geo information, see geoapify |
+| geo | properties: `country`, `country_code`, `state`, `county`, `municipality`, `city`, `town`, `village` |
 | lat | latitude |
 | lon | longitude |
 | type | OSM type of the location: `node`, `way` etc. |
@@ -97,7 +97,6 @@ Content of the `.env` file (stored in key=value notation)
 |key|value|
 |---|---|
 |TELEGRAM_BOT_TOKEN|The Telegram token provided by BotFather|
-|GEOAPIFY_API_KEY|The API key obtained from Geoapify|
 |IMAGE_GENERATOR_URL|Endpoint of the image generator|
 
 Optionally, move persistent data and configuration to a designated location. Check the mappings in the `docker-compose.yaml` file.

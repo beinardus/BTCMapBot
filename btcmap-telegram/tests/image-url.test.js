@@ -44,4 +44,24 @@ describe("image url tests", () => {
     let url = constructNotificationImageUrl({...data, city: "", geo: {...data.geo, city: "geo city"}});
     expect(url).toBe("https://mock.mock/mock?state=create&lan=en&name=Dra%20Ana%20Paula%20Mondragon%20-%20Ginecologia%20%2F%20Obstetr%C3%ADcia&city=geo%20city&country=br");
   });
+
+  test("If there is no property city, use town property of the geo data", () => {
+    let url = constructNotificationImageUrl({...data, city: "", geo: {...data.geo, town: "geo town"}});
+    expect(url).toBe("https://mock.mock/mock?state=create&lan=en&name=Dra%20Ana%20Paula%20Mondragon%20-%20Ginecologia%20%2F%20Obstetr%C3%ADcia&city=geo%20town&country=br");
+  });
+
+  test("If there is no property city or town, use village property of the geo data", () => {
+    let url = constructNotificationImageUrl({...data, city: "", geo: {...data.geo, village: "geo village"}});
+    expect(url).toBe("https://mock.mock/mock?state=create&lan=en&name=Dra%20Ana%20Paula%20Mondragon%20-%20Ginecologia%20%2F%20Obstetr%C3%ADcia&city=geo%20village&country=br");
+  });
+
+  test("Use city over town", () => {
+    let url = constructNotificationImageUrl({...data, city: "", geo: {...data.geo, city: "geo city", town: "geo town"}});
+    expect(url).toBe("https://mock.mock/mock?state=create&lan=en&name=Dra%20Ana%20Paula%20Mondragon%20-%20Ginecologia%20%2F%20Obstetr%C3%ADcia&city=geo%20city&country=br");
+  });
+
+  test("Use town over village", () => {
+    let url = constructNotificationImageUrl({...data, city: "", geo: {...data.geo, town: "geo town", village: "geo village"}});
+    expect(url).toBe("https://mock.mock/mock?state=create&lan=en&name=Dra%20Ana%20Paula%20Mondragon%20-%20Ginecologia%20%2F%20Obstetr%C3%ADcia&city=geo%20town&country=br");
+  });
 });
