@@ -70,7 +70,7 @@ function validateAST(ast, bindings) {
         throw new JsonataError(
           "Do not use special quotes (‘’). Replace them by single quotes (')");
 
-      const validNames = /^(country_code|country|state|county|municipality|city|town|village)$/;
+      const validNames = /^(lat|lon|country_code|country|state|county|municipality|city|town|village)$/;
       if (!node.value.match(validNames))
         throw new JsonataError(
           `"${node.value}" is not a search criterion`);

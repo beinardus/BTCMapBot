@@ -14,6 +14,9 @@ Launching your own bot will increase the data load on [BTCMap.org](https://btcma
 
 However, you can decide to make use of the `btcmap-osm` `zmq` (ZeroMQ) interface and build your own bot on top of that.
 
+### Filter options and recommandation
+There is a brief introduction of the filters when calling the `/help` bot command. This [document](./filters.md) elaborates on building complex filters.
+
 ## btcmap-osm
 This service makes use of the logging API of BTCMap, but implements a full lifetime cycle of locations (create -> update -> delete -> create), where BTCMap only provides a one time `create` event and multiple `delete` and `update` events.
 Updates are broadcasted to `zmq` listeners. Data is send using JSON. Use the `status` in the message to handle it. Before the data is send, it is enriched with geographical properties using the `reverse` API endpoint of [Nominatim](https://nominatim.org/) based on the `lat` and `lon` properties:
@@ -39,6 +42,8 @@ This service is a listener to the `zmq` interface provided by `btcmap-osm`. Each
 ### Tamed JSONata
 The `btcmap-telegram` bot uses `JSONata` as the engine for filtering locations. This engine is very powerful but lacks type checking and most validations will be performed at the moment input data is tested (`evaluate`), not during the compilation of the query. The actual filter is applied in the background process, so providing user feedback of errors happening at that stage is practically infeasable. Therefore the engine is crippled by a pre-compilation step (`validateAST`):
 - Right hand side array comparison using the `=` operator is prohibited.
+- Only single and double quotes allowed for string values (unicode quotes are rejected)
+- Check on the use of geo property names (other consts/variables are rejected)
 - Custom function calls are checked on the number of attributes passes to it.
 - Custom functions (like `$distance`) only take literal values for its parameters.
 - Custom function parameters are type checked.

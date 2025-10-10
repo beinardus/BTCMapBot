@@ -82,7 +82,7 @@ describe("Location filter expression tests", () => {
     expect(actual).toBeFalsy();
   })
 
-  const validSearchCriteria = ["country_code", "country", "state", "county", "municipality", "city", "town", "village"];
+  const validSearchCriteria = ["lat", "lon", "country_code", "country", "state", "county", "municipality", "city", "town", "village"];
   const geo2 = validSearchCriteria.reduce((a,c) => {
     a[c] = c;
     return a;
@@ -132,7 +132,7 @@ describe("Location filter expression tests", () => {
     }
   ]
 
-  test.each(locations)("Complex filter test $name", async ({name, geo, expected}) => {
+  test.each(locations)("Complex filter test $name", async ({geo, expected}) => {
     const filter = "(country_code = 'br' and state in ['Sao Paulo', 'São Paulo', 'SP'] and city in ['Sao Paulo', 'São Paulo', 'SP']) or (country_code = 'dk')";
 
     const actual = await evaluate(geo, filter);

@@ -21,7 +21,7 @@ Here’s how you can interact with this bot:
 - For multiple countries:
   `/setfilter country_code in ['nl', 'be']`
 - For a specific state inside a country:
-  `/setfilter country_code = 'nl' and state = 'Frisia'`
+  `/setfilter country_code = 'nl' and state = 'Fryslân'`
 - For a maximum distance (in meter) from a central point:
   `/setfilter $distance(51.98507204900486, 5.900446984603575) < 20000`
 
@@ -29,9 +29,13 @@ The following geographic entities can be used in the filter:
 - `lat`
 - `lon`
 - `country_code`
+- `country`
 - `state`
-- `district`
+- `county`
+- `municipality`
 - `city`
+- `town`
+- `village`
 
 You can find these values for a location by using the `/testfilter` command.
 If you have any questions or encounter issues, feel free to reach out!
