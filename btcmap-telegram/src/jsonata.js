@@ -65,6 +65,17 @@ function validateAST(ast, bindings) {
         checkSignature(customFunction.signature, node);
     }
 
+    if (node.type === "name") {
+      if (node.value.match(/[‘’]/))
+        throw new JsonataError(
+          "Do not use special quotes (‘’). Replace them by single quotes (')");
+
+      const validNames = /^(country_code|country|state|county|municipality|city|town|village)$/;
+      if (!node.value.match(validNames))
+        throw new JsonataError(
+          `"${node.value}" is not a search criterion`);
+    }
+
     // Recursively traverse child nodes
     if (node.lhs)
       traverse(node.lhs); // Traverse left-hand side of binary operator
@@ -77,6 +88,9 @@ function validateAST(ast, bindings) {
 
     if (node.expressions) 
       node.expressions.forEach(traverse);
+
+    if (node.type === "path")
+      node.steps.forEach(traverse);
   }
 
   traverse(ast); // Start traversal  

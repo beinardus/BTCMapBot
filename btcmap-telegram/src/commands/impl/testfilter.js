@@ -25,7 +25,7 @@ class TestFilterCommand extends Command {
   
       await sendMessage(`Geo data:  
   ${format.escape(JSON.stringify(geo))}
-  Is ${await filterFn.evaluate(geo)?"inside":"outside"} the working area.`, chatId);
+  This does ${await filterFn.evaluate(geo)?"":"not "}match the set filter.`, chatId);
     }
     catch (err) {
       logger.error("Unable to fetch data", err);

@@ -73,6 +73,35 @@ describe("Location filter expression tests", () => {
     await expect(evaluate(geo, "country_code = ['de', 'be']")).rejects.toThrow(JsonataError);
   })
 
+  test("Using unicode quotes like string constants is not valid", async () => {
+    await expect(evaluate(geo, "country_code in ['ca', ‘hk’]")).rejects.toThrow(JsonataError);
+  })
+
+  test("Using unicode quotes inside a string is valid", async () => {
+    const actual = await evaluate(geo, "country_code in ['ca', '‘hk’']");
+    expect(actual).toBeFalsy();
+  })
+
+  const validSearchCriteria = ["country_code", "country", "state", "county", "municipality", "city", "town", "village"];
+  const geo2 = validSearchCriteria.reduce((a,c) => {
+    a[c] = c;
+    return a;
+  }, {});
+
+  test.each(validSearchCriteria)("%s is tested against the set value", async (filter) => {
+    const actual = await evaluate(geo2, `${filter} = "${filter}"`);
+    expect(actual).toBeTruthy();
+  });  
+
+  test.each(validSearchCriteria)("%s is tested against a different value", async (filter) => {
+    const actual = await evaluate(geo2, `${filter} = "${filter}!"`);
+    expect(actual).toBeFalsy();
+  });  
+
+  test("Unknown search criteria are not allowed to be used", async () => {
+    await expect(evaluate(geo, "country_singer in ['Johnny Cash', 'Willie Nelson']")).rejects.toThrow(JsonataError);
+  })
+
   test("Proeflokaal Hoppenaar is about 719 meter away from the train station", async () => {
 
     const filterFn = createJsonata("$distance(51.98507204900486, 5.900446984603575) < 720", [
@@ -85,4 +114,28 @@ describe("Location filter expression tests", () => {
     expect(actual).toBeTruthy();
   })
 
+  const locations = [
+    {
+      name: "Germany",
+      geo: {"country_code":"de","country":"Deutschland","state":"Schleswig-Holstein","county":"Kreis Dithmarschen","municipality":"Büsum-Wesselburen","town":"Büsum"},
+      expected: false
+    },
+    {
+      name: "Denmark",
+      geo: {"country_code":"dk","country":"Danmark","state":"Region Sjælland","municipality":"Lolland Kommune","village":"Bandholm"},
+      expected: true
+    },
+    {
+      name: "Brasil",
+      geo: {"country_code":"br","country":"Brasil","state":"São Paulo","county":"Região Metropolitana de São Paulo","municipality":"Região Imediata de São Paulo","city":"São Paulo"},
+      expected: true
+    }
+  ]
+
+  test.each(locations)("Complex filter test $name", async ({name, geo, expected}) => {
+    const filter = "(country_code = 'br' and state in ['Sao Paulo', 'São Paulo', 'SP'] and city in ['Sao Paulo', 'São Paulo', 'SP']) or (country_code = 'dk')";
+
+    const actual = await evaluate(geo, filter);
+    expect(actual).toBe(expected);    
+  })
 });
