@@ -3,7 +3,7 @@ import { logger } from "btcmap-common";
 import { createJsonata } from "../../jsonata.js";
 import { sendMessage } from "../../notify.js";
 import { Command } from "../command.js";
-import { CommandError, CommandArgsError } from "../../error-dispatcher.js";
+import { CommandError, CommandArgsError, JsonataError } from "../../error-dispatcher.js";
 
 class SetFilterCommand extends Command {
   async action({chatId, args}) {
@@ -16,7 +16,10 @@ class SetFilterCommand extends Command {
     }
     catch (err) {
       logger.error(`Invalid filter: ${args}`, {err});
-      throw new CommandError("You did not enter a valid filter");
+      if (err instanceof JsonataError)
+        throw new CommandError(`You did not enter a valid filter:\n${err.message}`);
+
+      throw new CommandError("Unexpected error when changing the filter. Please report.");
     }
   
     await dbmanager.setFilter(chatId, args);
