@@ -37,8 +37,7 @@ The following geographic entities can be used in the filter:
 - `town`
 - `village`
 
-You can find these values for a location by using the `/testfilter` command.
-If you have any questions or encounter issues, feel free to reach out!
+You can find these values for a location by using the `/testfilter` command. You can read more about the filters [here](https://github.com/beinardus/BTCMapBot/blob/main/filters.md). If you have any questions or encounter issues, feel free to reach out!
 
 📌 *Language settings:*  
 Currently, two languages are supported `nl` and `en`. Feel free to request/add other languages. The language setting only affects the update messages of the locations; commands (including `help`) are kept in English. Language related commands are:

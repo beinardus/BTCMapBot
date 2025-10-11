@@ -23,6 +23,8 @@ Since the introduction of Nominatim, all names are returned in the local languag
 
 Note that `city` is often provided by the node itself. This has priority when displaying it, but for the filters only the geographic data is used.
 
+The filter engine is case and accent sensitive; any deviation will result in a mismatch.
+
 ## Custom functions
 At this moment, there is one custom function defined: `$distance`. This can be used to return the distance between two earth surface coordinates. Parameters (lat/lon) are restricted to constant numeric values, as the main use is to calculate the distance of a location to a fixed centre point. See examples.
 
