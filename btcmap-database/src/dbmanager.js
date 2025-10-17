@@ -32,6 +32,22 @@ CREATE TABLE IF NOT EXISTS "users" (
 );`);
 
     await db.run(`
+CREATE TABLE IF NOT EXISTS "geodata" (
+        "id" INTEGER,
+        "language" TEXT NULL,
+        "country_code" TEXT,
+        "country" TEXT,
+        "state" TEXT,
+        "county" TEXT,
+        "municipality" TEXT,
+        "city" TEXT,
+        "town" TEXT,
+        "village" TEXT,
+        "stamp" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY("id" AUTOINCREMENT)
+);`);
+
+    await db.run(`
 CREATE TABLE IF NOT EXISTS "stats" (
         "id"    INTEGER,
         "latest_stamp"  TIMESTAMP,
