@@ -17,6 +17,23 @@ services:
       network1:
         ipv4_address: 172.24.0.100
 
+  btcmap-nominatim-proxy:
+    image: btcmap-nominatim-proxy
+    build:
+      context: .
+      dockerfile: dockerfile-nominatim-proxy
+    container_name: btcmap-nominatim-proxy
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - /mnt/ssd/data/btcmap/btcmap-nominatim-proxy/default.yml:/usr/btcmap-nominatim-proxy/config/default.yml
+    ports:
+      - 3040:3000
+    networks:
+      network1:
+        ipv4_address: 172.24.0.103
+
   btcmap-telegram:
     image: btcmap-telegram:latest
     build:

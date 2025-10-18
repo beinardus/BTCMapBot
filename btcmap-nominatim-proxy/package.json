@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "name": "btcmap-nominatim-proxy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "btcmap-common": "file:../btcmap-common",
+    "config": "^3.3.12",
+    "custom-error": "file:../custom-error",
+    "express": "^5.1.0",
+    "got": "^13.0.0",
+    "http-utils": "file:../http-utils",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
+  }
+}

@@ -18,8 +18,13 @@ const dispatchNominatimError = (err) => {
   const errorMessage = err?.response?.body?.message;
   const statusCode = err?.response?.statusCode;
 
+  switch (statusCode) {
+    case 401:
+      throw new NominatimError("Unauthorized.", err);      
+  }
+
   if (errorMessage)
-    throw new NominatimError(`Nominatim proxy error (${statusCode}): ${errorMessage}`, err);
+    throw new NominatimError(`Nominatim API Error (${statusCode}): ${errorMessage}`, err);
 
   throw err;
 };

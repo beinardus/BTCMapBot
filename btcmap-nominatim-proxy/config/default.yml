@@ -1,0 +1,8 @@
+proxy: ""
+log-level: debug
+webserver:
+  port: 3000
+nominatim:
+  url-fmt: "https://nominatim.openstreetmap.org/reverse?lat=[LAT]&lon=[LON]&format=json&addressdetails=1&extratags=1&zoom=18"
+  user-agent: "BTCMapBot/1.0 (+https://github.com/beinardus/BTCMapBot)"
+  throttle: 1000
