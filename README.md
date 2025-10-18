@@ -56,6 +56,9 @@ Grant the bot admin rights to allow it to post in a Telegram channel as only adm
 ## btcmap-image-generator
 This service is used to provide the images for the Telegram notification's `photo` property. It uses `puppeteer` to convert an HTML page to a `png` image.
 
+## btcmap-nominatim-proxy
+This webservice is a gateway for [Nominatim](https://nominatim.org/) calls. Main reason is to conform to the fair use policy of their free service by restricting the throughput to 1 call per second. Since Nominatim is used in both the `btcmap-osm` and `btcmap-telegram` services, this could not be guarantied without a central coordinator. It is also implemented to prepare for geographic translations, causing multiple requests.
+
 ## installation
 Minimal version to copy
 ```
@@ -75,6 +78,9 @@ Minimal version to copy
 │   ├── src
 │   ├── package.json
 ├── btcmap-telegram
+│   ├── src
+│   ├── package.json
+├── btcmap-nominatim-proxy
 │   ├── src
 │   ├── package.json
 ├── custom-error
@@ -116,6 +122,8 @@ Optionally, move persistent data and configuration to a designated location. Che
 │   ├── bot-help.md
 ├── btcmap-telegram
 │   ├── default.yml
+├── btcmap-nominatim-proxy
+│   ├── default.yml
 ├── btcmap-image-generator
 │   ├── templates
 │   │   ├── blank.html
@@ -125,8 +133,6 @@ Optionally, move persistent data and configuration to a designated location. Che
 │   │   ├── face-screaming-in-fear_1f631.png
 │   │   ├── party-popper_1f389.png
 ```
-
-Update the configuration `/data/btcmap-telegram/default.yml` to use your own Telegram bot
 
 Build the `docker-compose.yml` from the root of the application:
 ```
