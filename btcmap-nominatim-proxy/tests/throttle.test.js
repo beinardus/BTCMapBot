@@ -56,7 +56,8 @@ describe("throttle", () => {
 
     try {
       await throttle(fn1, delay);
-    } catch (err) {
+    } 
+    catch (err) {
       // caller's catch block
       caught = err;
     }
