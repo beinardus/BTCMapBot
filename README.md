@@ -57,7 +57,7 @@ Grant the bot admin rights to allow it to post in a Telegram channel as only adm
 This service is used to provide the images for the Telegram notification's `photo` property. It uses `puppeteer` to convert an HTML page to a `png` image.
 
 ## btcmap-nominatim-proxy
-This webservice is a gateway for [Nominatim](https://nominatim.org/) calls. Main reason is to conform to the fair use policy of their free service by restricting the throughput to 1 call per second. Since Nominatim is used in both the `btcmap-osm` and `btcmap-telegram` services, this could not be guarantied without a central coordinator. It is also implemented to prepare for geographic translations, causing multiple requests.
+This webservice is a gateway for [Nominatim](https://nominatim.org/) calls. Main reason is to conform to the fair use policy of their free service by restricting the throughput to 1 call per second. Since Nominatim is used in both the `btcmap-osm` and `btcmap-telegram` services, this could not be guaranteed without a central coordinator. It is also implemented to prepare for geographic translations, causing multiple requests.
 
 ## installation
 Minimal version to copy
