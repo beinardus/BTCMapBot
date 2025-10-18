@@ -12,6 +12,6 @@ btcmap:
 geoapify:
   url-fmt: "https://api.geoapify.com/v1/geocode/reverse?lat=[LAT]&lon=[LON]&apiKey=[GEOAPIFY_API_KEY]"
 nominatim:
-  url-fmt: "https://btcmap-nominatim-proxy:3000/geo?lat=[LAT]&lon=[LON]"
+  url-fmt: "http://btcmap-nominatim-proxy:3000/geo?lat=[LAT]&lon=[LON]"
 zmq:
   url: "tcp://0.0.0.0:3000"
