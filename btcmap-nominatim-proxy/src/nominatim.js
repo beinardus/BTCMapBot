@@ -3,6 +3,7 @@ import config from "config";
 import { injectProxy } from "http-utils";
 import _ from "lodash";
 import { dispatchNominatimError } from "./error-dispatcher.js";
+import { throttle } from "./throttle.js";
 
 const nominatimConfig = config.get("nominatim");
 
@@ -17,17 +18,6 @@ const constructRequestOptions = () => {
     config.get("proxy")
   );
 };
-
-let lastCall = 0;
-async function throttle(fn, delay) {
-  const now = Date.now();
-  const waitTime = Math.max(0, delay - (now - lastCall));
-  if (waitTime > 0) await new Promise(res => setTimeout(res, waitTime));
-
-  const result = await fn();
-  lastCall = Date.now();
-  return result;
-}
 
 export async function getGeo(latitude, longitude) {
   try {
