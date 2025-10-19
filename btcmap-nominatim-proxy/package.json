@@ -19,8 +19,5 @@
     "http-utils": "file:../http-utils",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
-  },
-  "devDependencies": {
-    "@sinonjs/fake-timers": "^15.0.0"
   }
 }
