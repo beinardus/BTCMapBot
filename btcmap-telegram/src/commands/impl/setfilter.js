@@ -12,7 +12,9 @@ class SetFilterCommand extends Command {
   
     try {
       createJsonata(args, [
-        {name: "distance", fn: () => 0, signature: "<nn:n>"}]);
+        {name: "distance", fn: () => 0, signature: "<nn:n>"},
+        {name: "inpolygon", fn: () => false, signature: "<a:n>"}
+      ]);
     }
     catch (err) {
       logger.error(`Invalid filter: ${args}`, {err});

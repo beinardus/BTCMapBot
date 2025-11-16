@@ -4,12 +4,13 @@ import { dispatchJsonataError, JsonataError } from "./error-dispatcher.js";
 const typeMap = {
   "n": "number",
   "s": "string",
-  "b": "boolean"
+  "b": "boolean",
+  "a": "unary"
 };
 
 function decodeSignature(signature) {
   // todo: introduce more types / constructs when nescessary
-  const re = /^<(?<args>[nsb]*)(:(?<ret>[nsb]*))?>$/;
+  const re = /^<(?<args>[ansb]*)(:(?<ret>[nsb]*))?>$/;
   const {args, ret} = re.exec(signature).groups;
 
   return {
@@ -19,8 +20,8 @@ function decodeSignature(signature) {
 }
 
 function checkSignature(expected, node) {
-  const expectedSignature = decodeSignature(expected);
   const actualArgs = node.arguments;
+  const expectedSignature = decodeSignature(expected);
 
   const expectedLength = expectedSignature.args.length;
   const actualLength = actualArgs.length;  
@@ -33,10 +34,12 @@ function checkSignature(expected, node) {
     const expectedType = expectedSignature.args[index];
     const actualType = arg.type;
 
-    if (expectedType != actualType) 
+    if (expectedType != actualType) {
+      console.log(expectedType, actualType);
       throw new JsonataError(
         `Argument ${index + 1} of function "${node.value}" should be of type "${expectedType}".`
       );
+    }
   });
 }
 

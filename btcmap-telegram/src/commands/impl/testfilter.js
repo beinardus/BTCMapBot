@@ -7,6 +7,7 @@ import { sendMessage } from "../../notify.js";
 import { Command } from "../command.js";
 import { CommandArgsError, CommandError } from "../../error-dispatcher.js";
 import { distanceFactory } from "../../distance.js";
+import { inPolygonFactory } from "../../polygon.js";
 
 class TestFilterCommand extends Command {
   async action({chatId, args}) {
@@ -18,7 +19,9 @@ class TestFilterCommand extends Command {
                 
       const {filter} = await dbmanager.getUserById(chatId);
       const filterFn = createJsonata(filter, [
-        {name: "distance", fn: distanceFactory({latitude:lat, longitude:lon}), signature: "<nn:n>"}]
+        {name: "distance", fn: distanceFactory({latitude:lat, longitude:lon}), signature: "<nn:n>"},
+        {name: "inpolygon", fn: inPolygonFactory({latitude:lat, longitude:lon}), signature: "<a:b>"} //todo: a<nn>
+      ]
       );
   
       const geo = await getGeo(lat, lon);

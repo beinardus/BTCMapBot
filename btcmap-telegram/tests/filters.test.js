@@ -1,6 +1,7 @@
 import { createJsonata } from "../src/jsonata.js";
 import { JsonataError } from "../src/error-dispatcher.js";
 import { distanceFactory } from "../src/distance.js";
+import { inPolygonFactory } from "../src/polygon.js";
 
 describe("Location filter expression tests", () => {
 
@@ -103,15 +104,46 @@ describe("Location filter expression tests", () => {
   })
 
   test("Proeflokaal Hoppenaar is about 719 meter away from the train station", async () => {
+    const geoHoppenaar = {lat: 51.98182413297442, lon: 5.909504158099749};
 
+    // define the filter with the coordinates of the train station
     const filterFn = createJsonata("$distance(51.98507204900486, 5.900446984603575) < 720", [
-      {name: "distance", fn: distanceFactory({latitude: 51.98182413297442, longitude: 5.909504158099749}), signature: "<nn:n>"}
+      {name: "distance", fn: distanceFactory({latitude: geoHoppenaar.lat, longitude: geoHoppenaar.lon}), signature: "<nn:n>"}
     ]);        
 
-    const geo = {lat: 51.98182413297442, lon: 5.909504158099749};
-    const actual = await filterFn.evaluate(geo);
+    // seems redundant, but this is the context of the whole filter
+    const actual = await filterFn.evaluate(geoHoppenaar);
 
     expect(actual).toBeTruthy();
+  })
+
+  const polygonTestCases = [
+    {
+      poi: {lat: 51.98182413297442, lon: 5.909504158099749},
+      expected: true // Hoppenaar
+    },
+    {
+      poi: {lat: 51.849061436492214, lon: 5.867185814169468},
+      expected: false // Chazzz Food Nijmegen
+    }
+  ];
+
+  test.each(polygonTestCases)("Point $poi lat $poi.lon is in polygon test", async ({poi, expected}) => {
+    // define the filter with the approximate area of Arnhem
+    const filterFn = createJsonata(`
+      $inpolygon([
+        [5.86015,51.98797],
+        [5.95073,51.95856],
+        [5.96199,52.01175],
+        [5.90650,52.02286],
+        [5.86015,51.98797]])`, [
+      {name: "inpolygon", fn: inPolygonFactory({latitude: poi.lat, longitude: poi.lon}), signature: "<a:b>"} // todo: a<nn>
+    ]);        
+
+    // seems redundant, but this is the context of the whole filter
+    const actual = await filterFn.evaluate(poi);
+
+    expect(actual).toBe(expected);
   })
 
   const locations = [
