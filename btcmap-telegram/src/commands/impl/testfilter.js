@@ -2,12 +2,10 @@ import { html as format } from "telegram-format";
 import { dbmanager } from "btcmap-database";
 import { logger } from "btcmap-common";
 import { getGeo, NominatimError } from "nominatim";
-import { createJsonata } from "../../jsonata.js";
+import { createJsonata } from "btcmap-jsonata";
 import { sendMessage } from "../../notify.js";
 import { Command } from "../command.js";
 import { CommandArgsError, CommandError } from "../../error-dispatcher.js";
-import { distanceFactory } from "../../distance.js";
-import { inPolygonFactory } from "../../polygon.js";
 
 class TestFilterCommand extends Command {
   async action({chatId, args}) {
@@ -18,11 +16,7 @@ class TestFilterCommand extends Command {
       const [lat, lon] = args.split(",").map(Number);
                 
       const {filter} = await dbmanager.getUserById(chatId);
-      const filterFn = createJsonata(filter, [
-        {name: "distance", fn: distanceFactory({latitude:lat, longitude:lon}), signature: "<nn:n>"},
-        {name: "inpolygon", fn: inPolygonFactory({latitude:lat, longitude:lon}), signature: "<a:b>"} //todo: a<nn>
-      ]
-      );
+      const filterFn = createJsonata(filter, {lat, lon});
   
       const geo = await getGeo(lat, lon);
   

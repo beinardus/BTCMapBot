@@ -12,14 +12,6 @@ class TelegramError extends CustomError {
   }
 }
 
-class JsonataError extends CustomError {
-  constructor(message, cause) {
-    super(message);
-    this.name = "JsonataError";
-    this.cause = cause;
-  }
-}
-
 class CommandError extends CustomError {
   constructor(message, cause) {
     super(message);
@@ -41,10 +33,6 @@ class CommandArgsError extends CommandError {
     this.name = "CommandArgsError";
   }
 }
-
-const dispatchJsonataError = (err) => {
-  throw new JsonataError(err.code, err);
-};
 
 const dispatchTelegramError = (err) => {
 
@@ -84,4 +72,4 @@ const dispatchTelegramError = (err) => {
   throw err;
 };
 
-export { dispatchTelegramError, dispatchJsonataError, TelegramError, JsonataError, CommandError, CommandAuthError, CommandArgsError};
+export { dispatchTelegramError, TelegramError, CommandError, CommandAuthError, CommandArgsError};

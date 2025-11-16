@@ -1,15 +1,13 @@
 import { getDistance } from "geolib";
-import { logger } from "btcmap-common";
+import { JsonataError } from "./error-dispatcher";
 
 const isValidCoordinate = (p) =>
   p.latitude != null && p.longitude != null;
 
 const distanceFactory = (poiPoint) => {
   // the point to be tested
-  if (!isValidCoordinate(poiPoint)) {
-    logger.error("`distance` should be called with a latitude and longitude parameter");
-    return false;
-  }
+  if (!isValidCoordinate(poiPoint))
+    throw new JsonataError("`distance` should be called with a latitude and longitude parameter");
 
   return (latitude, longitude) => {
     // the point defined in the filter

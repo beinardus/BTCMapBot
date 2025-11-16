@@ -1,5 +1,5 @@
 import { isPointInPolygon } from "geolib";
-import { logger } from "btcmap-common";
+import { JsonataError } from "./error-dispatcher";
 
 const isValidCoordinate = (p) =>
   p.latitude != null && p.longitude != null;
@@ -9,25 +9,19 @@ const isValidPolygon = (polygon) =>
 
 const inPolygonFactory = (poiPoint) => { 
   // the point to be tested
-  if (!isValidCoordinate(poiPoint)) {
-    logger.error("`inpolygon` should be called with a latitude and longitude parameter");
-    return false;
-  }
+  if (!isValidCoordinate(poiPoint))
+    throw new JsonataError("`inpolygon` should be called with a latitude and longitude parameter");
 
   // the function called per user (that makes use of the $inpolygon function)
   return (polygon) => {
-    if (!Array.isArray(polygon)) {
-      logger.error("`inpolygon` should have been called with an array parameter");
-      return false;
-    }
+    if (!Array.isArray(polygon))
+      throw new JsonataError("`inpolygon` should have been called with an array parameter");
 
     // In GeoJSON, polygons are defined as an array of [longitude, latitude] pairs
     const polygonCoordinates = polygon.map(([longitude,latitude]) => ({latitude, longitude})); 
 
-    if (!isValidPolygon(polygonCoordinates)) {
-      logger.error("`inpolygon` parameter contains invalid coordinates");
-      return false;
-    }
+    if (!isValidPolygon(polygonCoordinates))
+      throw new JsonataError("`inpolygon` parameter contains invalid coordinates");
 
     return isPointInPolygon(poiPoint, polygonCoordinates);
   }

@@ -42,6 +42,13 @@ COPY ./translation/src ./src
 COPY ./translation/index.js ./
 RUN npm install --production
 
+FROM base AS btcmap-jsonata
+WORKDIR /usr/btcmap-jsonata
+COPY ./btcmap-jsonata/package.json ./
+COPY ./btcmap-jsonata/src ./src
+COPY ./btcmap-jsonata/index.js ./
+RUN npm install --production
+
 # Final stage: Pull everything together (using the same base image)
 # ============================================
 FROM base AS builder
@@ -53,6 +60,7 @@ COPY --from=btcmap-common /usr/btcmap-common ./btcmap-common
 COPY --from=btcmap-database /usr/btcmap-database ./btcmap-database
 COPY --from=nominatim /usr/nominatim ./nominatim
 COPY --from=translation /usr/translation ./translation
+COPY --from=btcmap-jsonata /usr/btcmap-jsonata ./btcmap-jsonata
 
 WORKDIR /usr/btcmap-telegram
 COPY ./btcmap-telegram/package.json ./

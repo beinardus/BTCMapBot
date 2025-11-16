@@ -1,9 +1,9 @@
 import { dbmanager } from "btcmap-database";
 import { logger } from "btcmap-common";
-import { createJsonata } from "../../jsonata.js";
+import { createJsonata, JsonataError } from "btcmap-jsonata";
 import { sendMessage } from "../../notify.js";
 import { Command } from "../command.js";
-import { CommandError, CommandArgsError, JsonataError } from "../../error-dispatcher.js";
+import { CommandError, CommandArgsError } from "../../error-dispatcher.js";
 
 class SetFilterCommand extends Command {
   async action({chatId, args}) {
@@ -11,10 +11,8 @@ class SetFilterCommand extends Command {
       throw new CommandArgsError(`/${this.token} requires a filter expression`);
   
     try {
-      createJsonata(args, [
-        {name: "distance", fn: () => 0, signature: "<nn:n>"},
-        {name: "inpolygon", fn: () => false, signature: "<a:n>"}
-      ]);
+      // just to validate the expression      
+      createJsonata(args);
     }
     catch (err) {
       logger.error(`Invalid filter: ${args}`, {err});

@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "name": "jsonata",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "npx jest",
+    "lint": "eslint --config ../eslint.config.js  src/**/*.js tests/**/*.js *.js --fix"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    }
+  },
+  "dependencies": {
+    "geolib": "^3.3.4",
+    "jsonata": "^2.0.6",
+    "custom-error": "file:../custom-error"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

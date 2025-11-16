@@ -1,5 +1,5 @@
 import { createJsonata } from "../src/jsonata.js";
-import { JsonataError } from "../src/error-dispatcher.js";
+import { JsonataError } from "../../btcmap-telegram/src/error-dispatcher.js";
 import { distanceFactory } from "../src/distance.js";
 import { inPolygonFactory } from "../src/polygon.js";
 

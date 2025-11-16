@@ -83,6 +83,10 @@ Minimal version to copy
 ├── btcmap-nominatim-proxy
 │   ├── src
 │   ├── package.json
+├── btcmap-jsonata
+│   ├── src
+│   ├── package.json
+│   ├── index.js
 ├── custom-error
 │   ├── package.json
 │   ├── index.js
