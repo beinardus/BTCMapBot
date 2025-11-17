@@ -1,5 +1,5 @@
 import { getDistance } from "geolib";
-import { JsonataError } from "./error-dispatcher";
+import { JsonataError } from "./error-dispatcher.js";
 
 const isValidCoordinate = (p) =>
   p.latitude != null && p.longitude != null;

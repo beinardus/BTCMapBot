@@ -1,5 +1,5 @@
 import jsonata from "jsonata";
-import { dispatchJsonataError, JsonataError } from "../../btcmap-telegram/src/error-dispatcher.js";
+import { dispatchJsonataError, JsonataError } from "./error-dispatcher.js";
 
 const typeMap = {
   "n": "number",
