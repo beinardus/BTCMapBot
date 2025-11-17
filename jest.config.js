@@ -46,5 +46,13 @@ export default {
         __ROOT_DIR__: `${__dirname}/btcmap-nominatim-proxy`
       },
     },
+    {
+      displayName: "btcmap-jsonata",
+      rootDir: `${__dirname}/btcmap-jsonata`,
+      setupFiles: [`${__dirname}/setupTests.js`],
+      globals: {
+        __ROOT_DIR__: `${__dirname}/btcmap-jsonata`
+      },
+    },
   ],
 };

@@ -27,7 +27,7 @@ function checkSignature(expected, node) {
   const actualLength = actualArgs.length;  
 
   if (expectedLength != actualLength)
-    throw new JsonataError(`Function "${node.value}" expects ${expectedLength} arguments.`);
+    throw new JsonataError(`Function "$${node.procedure.value}" expects ${expectedLength} arguments.`);
 
   // Validate that arguments are literal values
   node.arguments.forEach((arg, index) => {
@@ -43,6 +43,7 @@ function checkSignature(expected, node) {
   });
 }
 
+// todo: disable all(?) default functions because their signatures are not checked during AST validation
 function validateAST(ast, bindings) {
   const lookup = bindings.reduce((a,c) => {
     a[c.name] = c; return a;

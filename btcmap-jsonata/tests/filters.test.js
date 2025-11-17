@@ -103,6 +103,20 @@ describe("Location filter expression tests", () => {
     await expect(evaluate(geo, "country_singer in ['Johnny Cash', 'Willie Nelson']")).rejects.toThrow(JsonataError);
   })
 
+  test("Incorrect number of arguments to custom function should throw JsonataError", () => {
+    const create = () =>
+      createJsonata("$distance()", [
+        {
+          name: "distance",
+          fn: distanceFactory({ latitude: 0, longitude: 0 }),
+          signature: "<nn:n>",
+        },
+      ]);
+
+    expect(create).toThrow(JsonataError);
+    expect(create).toThrow("Function \"$distance\" expects 2 arguments.");
+  });
+
   test("Proeflokaal Hoppenaar is about 719 meter away from the train station", async () => {
     const geoHoppenaar = {lat: 51.98182413297442, lon: 5.909504158099749};
 
