@@ -38,5 +38,21 @@ export default {
         "node_modules/(?!telegram-format/.*)"
       ]
     },
+    {
+      displayName: "btcmap-nominatim-proxy",
+      rootDir: `${__dirname}/btcmap-nominatim-proxy`,
+      setupFiles: [`${__dirname}/setupTests.js`],
+      globals: {
+        __ROOT_DIR__: `${__dirname}/btcmap-nominatim-proxy`
+      },
+    },
+    {
+      displayName: "btcmap-jsonata",
+      rootDir: `${__dirname}/btcmap-jsonata`,
+      setupFiles: [`${__dirname}/setupTests.js`],
+      globals: {
+        __ROOT_DIR__: `${__dirname}/btcmap-jsonata`
+      },
+    },
   ],
 };

@@ -12,14 +12,6 @@ class TelegramError extends CustomError {
   }
 }
 
-class JsonataError extends CustomError {
-  constructor(message, cause) {
-    super(message);
-    this.name = "JsonataError";
-    this.cause = cause;
-  }
-}
-
 class CommandError extends CustomError {
   constructor(message, cause) {
     super(message);
@@ -42,10 +34,6 @@ class CommandArgsError extends CommandError {
   }
 }
 
-const dispatchJsonataError = (err) => {
-  throw new JsonataError(err.code, err);
-};
-
 const dispatchTelegramError = (err) => {
 
   if (err instanceof RequestError) {
@@ -66,6 +54,9 @@ const dispatchTelegramError = (err) => {
         if (errorMessage?.match(/bot was blocked by the user/))
           throw new TelegramError("Bot blocked", err, errorCodes.INVALID_CHAT);
 
+        if (errorMessage?.match(/bot was kicked from the group chat/))
+          throw new TelegramError("Bot removed from group", err, errorCodes.INVALID_CHAT);
+
         if (errorMessage?.match(/bot was kicked from the supergroup chat/))
           throw new TelegramError("Bot removed from supergroup", err, errorCodes.INVALID_CHAT);
 
@@ -81,4 +72,4 @@ const dispatchTelegramError = (err) => {
   throw err;
 };
 
-export { dispatchTelegramError, dispatchJsonataError, TelegramError, JsonataError, CommandError, CommandAuthError, CommandArgsError};
+export { dispatchTelegramError, TelegramError, CommandError, CommandAuthError, CommandArgsError};

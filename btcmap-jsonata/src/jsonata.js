@@ -4,12 +4,13 @@ import { dispatchJsonataError, JsonataError } from "./error-dispatcher.js";
 const typeMap = {
   "n": "number",
   "s": "string",
-  "b": "boolean"
+  "b": "boolean",
+  "a": "unary"
 };
 
 function decodeSignature(signature) {
   // todo: introduce more types / constructs when nescessary
-  const re = /^<(?<args>[nsb]*)(:(?<ret>[nsb]*))?>$/;
+  const re = /^<(?<args>[ansb]*)(:(?<ret>[nsb]*))?>$/;
   const {args, ret} = re.exec(signature).groups;
 
   return {
@@ -19,27 +20,30 @@ function decodeSignature(signature) {
 }
 
 function checkSignature(expected, node) {
-  const expectedSignature = decodeSignature(expected);
   const actualArgs = node.arguments;
+  const expectedSignature = decodeSignature(expected);
 
   const expectedLength = expectedSignature.args.length;
   const actualLength = actualArgs.length;  
 
   if (expectedLength != actualLength)
-    throw new JsonataError(`Function "${node.value}" expects ${expectedLength} arguments.`);
+    throw new JsonataError(`Function "$${node.procedure.value}" expects ${expectedLength} arguments.`);
 
   // Validate that arguments are literal values
   node.arguments.forEach((arg, index) => {
     const expectedType = expectedSignature.args[index];
     const actualType = arg.type;
 
-    if (expectedType != actualType) 
+    if (expectedType != actualType) {
+      console.log(expectedType, actualType);
       throw new JsonataError(
         `Argument ${index + 1} of function "${node.value}" should be of type "${expectedType}".`
       );
+    }
   });
 }
 
+// todo: disable all(?) default functions because their signatures are not checked during AST validation
 function validateAST(ast, bindings) {
   const lookup = bindings.reduce((a,c) => {
     a[c.name] = c; return a;

@@ -54,7 +54,8 @@ app.post("/webhook", async (req, res) => {
       }
       catch (err) {
         if (err instanceof CommandError)
-          await sendMessage(err.message, chatId);
+          // send the error message to the user in plain text
+          await sendMessage(err.message, chatId, "");
       }
 
     res.sendStatus(200);
