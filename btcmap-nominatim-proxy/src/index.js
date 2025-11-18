@@ -3,6 +3,7 @@ import config from "config";
 import { getGeo } from "./nominatim.js";
 import { logger } from "btcmap-common";
 import { NominatimError } from "./error-dispatcher.js";
+import { dbmanager } from "btcmap-database";
 
 const wsConfig = config.get("webserver");
 
@@ -21,6 +22,13 @@ app.get("/geo", async (req, res) => {
       return res.status(400).json({ message: "Missing lat or lon parameter" });
 
     const result = await getGeo(lat, lon);
+
+    await dbmanager.addGeodata({
+      lat: parseFloat(lat),
+      lon: parseFloat(lon),
+      ...result
+    });
+
     res.json(result);
   }
   catch (err) {

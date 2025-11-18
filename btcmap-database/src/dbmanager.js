@@ -32,8 +32,10 @@ CREATE TABLE IF NOT EXISTS "users" (
 );`);
 
     await db.run(`
-CREATE TABLE IF NOT EXISTS "geodata" (
+CREATE TABLE IF NOT EXISTS "nominatim_geodata" (
         "id" INTEGER,
+        "lat" REAL,
+        "lon" REAL,
         "language" TEXT NULL,
         "country_code" TEXT,
         "country" TEXT,
@@ -163,6 +165,17 @@ const addOrUpdateLocation = async(l) => {
   });
 }
 
+const addGeodata = async(geodata) => {
+  const result = await dbConnection.execute(async db => {
+    const res = await db.run(`
+      insert into nominatim_geodata (lat, lon, language, country_code, country, state, county, municipality, city, town, village)
+      values ($lat, $lon, $language, $country_code, $country, $state, $county, $municipality, $city, $town, $village);  
+      `, {$lat: geodata.lat, $lon: geodata.lon, $language: geodata.language, $country_code: geodata.country_code, $country: geodata.country, $state: geodata.state, $county: geodata.county, $municipality: geodata.municipality, $city: geodata.city, $town: geodata.town, $village: geodata.village});
+    return res.lastID;
+  });
+  return result;
+}
+
 const getLocationActivationStatus = async (id) => {
   const location = await getLocation(id);
   if (!location)
@@ -207,4 +220,4 @@ const batchUpdateLocations = async(data) => {
   });  
 }
 
-export { setup, addUser, getActiveUsers, getUserById, setFilter, setLanguage, deactivateUser, getStats, batchUpdateLocations, enrichDataWithActivationStatus, addOrUpdateLocation, dbConnection }
+export { dbConnection, setup, addUser, getActiveUsers, getUserById, setFilter, setLanguage, deactivateUser, getStats, batchUpdateLocations, enrichDataWithActivationStatus, addOrUpdateLocation, addGeodata };

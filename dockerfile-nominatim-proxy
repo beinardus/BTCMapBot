@@ -21,6 +21,13 @@ COPY ./btcmap-common/src ./src
 COPY ./btcmap-common/index.js ./
 RUN npm install --production
 
+FROM base AS btcmap-database
+WORKDIR /usr/btcmap-database
+COPY ./btcmap-database/package.json ./
+COPY ./btcmap-database/src ./src
+COPY ./btcmap-database/index.js ./
+RUN npm install --production
+
 # Final stage: Pull everything together (using the same base image)
 # ============================================
 FROM base AS builder
@@ -29,6 +36,7 @@ WORKDIR /usr
 COPY --from=custom-error /usr/custom-error ./custom-error
 COPY --from=http-utils /usr/http-utils ./http-utils
 COPY --from=btcmap-common /usr/btcmap-common ./btcmap-common
+COPY --from=btcmap-database /usr/btcmap-database ./btcmap-database
 
 WORKDIR /usr/btcmap-nominatim-proxy
 COPY ./btcmap-nominatim-proxy/package.json ./

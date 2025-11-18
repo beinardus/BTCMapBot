@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "btcmap-common": "file:../btcmap-common",
+    "btcmap-database": "file:../btcmap-database",
     "config": "^3.3.12",
     "custom-error": "file:../custom-error",
     "express": "^5.1.0",
