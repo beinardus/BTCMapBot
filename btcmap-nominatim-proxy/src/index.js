@@ -23,11 +23,17 @@ app.get("/geo", async (req, res) => {
 
     const result = await getGeo(lat, lon);
 
-    await dbmanager.addGeodata({
-      lat: parseFloat(lat),
-      lon: parseFloat(lon),
-      ...result
-    });
+    try {
+      await dbmanager.addGeodata({
+        lat: parseFloat(lat),
+        lon: parseFloat(lon),
+        ...result
+      });
+    }
+    catch (err) {
+      // missing this record is not fatal
+      logger.error(err);
+    }
 
     res.json(result);
   }
