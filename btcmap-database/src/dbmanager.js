@@ -17,6 +17,16 @@ CREATE TABLE IF NOT EXISTS "locations" (
         "addr_city"     TEXT,
         "is_active"     BOOLEAN DEFAULT 1,
         "stamp" TIMESTAMP, [type] TEXT,
+        "geo_source" INTEGER DEFAULT 0,
+        "geo_language" TEXT,
+        "geo_country_code" TEXT,
+        "geo_country" TEXT,
+        "geo_state" TEXT,
+        "geo_county" TEXT,
+        "geo_municipality" TEXT,
+        "geo_city" TEXT,
+        "geo_town" TEXT,
+        "geo_village" TEXT,
         PRIMARY KEY("id")
 );`);
 
