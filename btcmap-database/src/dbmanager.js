@@ -1,7 +1,7 @@
 import config from "config";
 import { Database } from "./database.js";
 import { DbConnection } from "./dbconnection.js";
-import { dateUtils, logger, activationStatus } from "btcmap-common";
+import { dateUtils, logger, activationStatus, geoSource } from "btcmap-common";
 
 const dbConfig = config.get("database");
 const dbConnection = new DbConnection(new Database(dbConfig.path));
@@ -210,7 +210,7 @@ const enrichDataWithPreviousData = async (data) => {
       const location = await getLocation(d.id);
       if (!location) {
         d.transition.prevStatus = activationStatus.UNKNOWN;
-        d.transition.prevGeoSource = 0;
+        d.transition.prevGeoSource = geoSource.NONE;
       } 
       else {
         d.transition.prevStatus = location.is_active ? activationStatus.ACTIVE : activationStatus.INACTIVE;
