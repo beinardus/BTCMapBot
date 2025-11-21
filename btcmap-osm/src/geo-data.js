@@ -2,10 +2,9 @@ import { getDistance } from "geolib";
 import { getGeo } from "nominatim";
 import { logger, geoSource } from "btcmap-common";
 
-
 const needGeoUpdate = (d) => {
   // revalidate if there was no previous recording
-  if (d.transition.prevGeoSource == geoSource.NONE)
+  if (d.geo_source == geoSource.NONE)
     return true;
 
   const p1 = { latitude: d.transition.prevLat, longitude: d.transition.prevLon };

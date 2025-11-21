@@ -157,10 +157,11 @@ const updateStats = async(latest_stamp) => {
 const getLocation = async(id) => {
   const row = await dbConnection.execute(async db => {
     return await db.get(`
-        select l.id, l.lat, l.lon, l.name, l.addr_city, l.is_active, l.stamp
+        select l.id, l.lat, l.lon, l.addr_city, l.name, l.is_active, l.stamp, l.type,
+               l.geo_source, l.geo_country_code, l.geo_country, l.geo_state, l.geo_county,
+               l.geo_municipality, l.geo_city, l.geo_town, l.geo_village
         from locations l
-        where l.id = $id
-    `, {$id: id});
+        where l.id = $id`, {$id: id});
   });
 
   return row;
@@ -169,26 +170,18 @@ const getLocation = async(id) => {
 const addOrUpdateLocation = async(l) => {
   await dbConnection.execute(async db => {
     await db.run(`
-      insert or replace into locations (id, lat, lon, addr_city, name, is_active, stamp, type, geo_source, geo_country_code, geo_country, geo_state, geo_county, geo_municipality, geo_city, geo_town, geo_village)
-      values ($id, $lat, $lon, $addr_city, $name, $is_active, $stamp, $type, $geo_source, $geo_country_code, $geo_country, $geo_state, $geo_county, $geo_municipality, $geo_city, $geo_town, $geo_village);
-  `, {
-      $id: l.id, 
-      $lat: l.lat, 
-      $lon: l.lon, 
-      $addr_city: l.city, 
-      $name: l.name, 
-      $is_active: l.is_active, 
-      $stamp: l.stamp, 
-      $type: l.type, 
-      $geo_source: l.geo_source, 
-      $geo_country_code: l.geo_country_code, 
-      $geo_country: l.geo_country, 
-      $geo_state: l.geo_state, 
-      $geo_county: l.geo_county, 
-      $geo_municipality: l.geo_municipality, 
-      $geo_city: l.geo_city, 
-      $geo_town: l.geo_town, 
-      $geo_village: l.geo_village});
+      insert or replace into locations (
+        id, lat, lon, addr_city, name, is_active, stamp, type,
+        geo_source, geo_country_code, geo_country, geo_state, geo_county,
+        geo_municipality, geo_city, geo_town, geo_village)
+      values (
+        $id, $lat, $lon, $addr_city, $name, $is_active, $stamp, $type,
+        $geo_source, $geo_country_code, $geo_country, $geo_state, $geo_county,
+        $geo_municipality, $geo_city, $geo_town, $geo_village)
+        `,{
+      $id: l.id, $lat: l.lat, $lon: l.lon, $addr_city: l.city, $name: l.name, $is_active: l.is_active, $stamp: l.stamp, $type: l.type, 
+      $geo_source: l.geo_source, $geo_country_code: l.geo_country_code, $geo_country: l.geo_country, $geo_state: l.geo_state, $geo_county: l.geo_county, 
+      $geo_municipality: l.geo_municipality, $geo_city: l.geo_city, $geo_town: l.geo_town, $geo_village: l.geo_village});
   });
 }
 
@@ -210,13 +203,16 @@ const enrichDataWithPreviousData = async (data) => {
       const location = await getLocation(d.id);
       if (!location) {
         d.transition.prevStatus = activationStatus.UNKNOWN;
-        d.transition.prevGeoSource = geoSource.NONE;
+        d.geo_source = geoSource.NONE;
       } 
       else {
         d.transition.prevStatus = location.is_active ? activationStatus.ACTIVE : activationStatus.INACTIVE;
-        d.transition.prevGeoSource = location.geo_source;
         d.transition.prevLat = location.lat;
         d.transition.prevLon = location.lon;
+        // copy all geo_ fields
+        Object.keys(location)
+          .filter(key => key.startsWith("geo_"))
+          .forEach(key => d[key] = location[key]);
       }
     }
   });

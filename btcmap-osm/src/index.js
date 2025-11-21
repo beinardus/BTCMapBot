@@ -29,8 +29,8 @@ async function synchronize() {
   enrichDataWithReportType(data);
 
   for (const d of data) 
-    // update geo data if the object has moved
     try {
+      // update geo data if the object has moved
       await updateGeo(d);
       d.geo = geoFromLocation(d);
     }
@@ -77,7 +77,7 @@ async function executeJob(jobName) {
 }
 
 async function main() {
-  logger.info("BTCMap synchronizer v1.2 started");
+  logger.info("BTCMap synchronizer v1.3 started");
   await reporter.setup();
 
   const scheduledJob = schedule.scheduleJob(JOB_NAME, config.get("cron"), async () => await executeJob(JOB_NAME));
