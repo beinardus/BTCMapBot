@@ -1,6 +1,5 @@
 import zmq from "zeromq";
 import {logger, locationStatus} from "btcmap-common";
-import { getGeo } from "nominatim";
 import config from "config";
 
 const zmqConfig = config.get("zmq");
@@ -8,7 +7,6 @@ const zmqConfig = config.get("zmq");
 const publisher = new zmq.Publisher();
 
 const report = async (status, l) => {
-  const geo = (l.lat != null && l.lon != null) ? await getGeo(l.lat, l.lon) : null;
 
   switch (status) {
     case locationStatus.CREATE:
@@ -19,7 +17,7 @@ const report = async (status, l) => {
         status: status,
         name: l.name,
         city: l.city,
-        geo: geo,
+        geo: l.geo,
         lat: l.lat,
         lon: l.lon,
         type: l.type

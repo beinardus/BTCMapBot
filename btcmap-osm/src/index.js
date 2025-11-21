@@ -8,6 +8,7 @@ import * as reporter from "./zmq-reporter.js"; // or use plain reporter.js for d
 import { createStats } from "./stats.js";
 import { enrichDataWithTransition, enrichDataWithReportType } from "./data-interpreter.js";
 import { CustomError } from "custom-error";
+import { updateGeo, geoFromLocation } from "./geo-data.js";
 
 const JOB_NAME = "synchronize";
 
@@ -24,8 +25,21 @@ async function synchronize() {
   let data = await btcmap.retrieveData(latestUpdate);
 
   enrichDataWithTransition(data, latestUpdate);
-  await dbmanager.enrichDataWithActivationStatus(data);
+  await dbmanager.enrichDataWithPreviousData(data);
   enrichDataWithReportType(data);
+
+  for (const d of data) 
+    // update geo data if the object has moved
+    try {
+      await updateGeo(d);
+      d.geo = geoFromLocation(d);
+    }
+    catch(err) {
+      if (err instanceof CustomError)
+        logger.error(`failed to update geodata for location ${d.id}: ${err.message}`);
+      else
+        throw err;
+    }
 
   await dbmanager.batchUpdateLocations(data);
 

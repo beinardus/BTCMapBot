@@ -169,9 +169,26 @@ const getLocation = async(id) => {
 const addOrUpdateLocation = async(l) => {
   await dbConnection.execute(async db => {
     await db.run(`
-      insert or replace into locations (id, lat, lon, addr_city, name, is_active, stamp, type)
-      values ($id, $lat, $lon, $addr_city, $name, $is_active, $stamp, $type);
-  `, {$id: l.id, $lat: l.lat, $lon: l.lon, $addr_city: l.city, $name: l.name, $is_active: l.is_active, $stamp: l.stamp, $type: l.type});
+      insert or replace into locations (id, lat, lon, addr_city, name, is_active, stamp, type, geo_source, geo_country_code, geo_country, geo_state, geo_county, geo_municipality, geo_city, geo_town, geo_village)
+      values ($id, $lat, $lon, $addr_city, $name, $is_active, $stamp, $type, $geo_source, $geo_country_code, $geo_country, $geo_state, $geo_county, $geo_municipality, $geo_city, $geo_town, $geo_village);
+  `, {
+      $id: l.id, 
+      $lat: l.lat, 
+      $lon: l.lon, 
+      $addr_city: l.city, 
+      $name: l.name, 
+      $is_active: l.is_active, 
+      $stamp: l.stamp, 
+      $type: l.type, 
+      $geo_source: l.geo_source, 
+      $geo_country_code: l.geo_country_code, 
+      $geo_country: l.geo_country, 
+      $geo_state: l.geo_state, 
+      $geo_county: l.geo_county, 
+      $geo_municipality: l.geo_municipality, 
+      $geo_city: l.geo_city, 
+      $geo_town: l.geo_town, 
+      $geo_village: l.geo_village});
   });
 }
 
@@ -186,19 +203,22 @@ const addGeodata = async(geodata) => {
   return result;
 }
 
-const getLocationActivationStatus = async (id) => {
-  const location = await getLocation(id);
-  if (!location)
-    return activationStatus.UNKNOWN;
-
-  return location.is_active ? activationStatus.ACTIVE : activationStatus.INACTIVE;
-}
-
-const enrichDataWithActivationStatus = async (data) => {
+const enrichDataWithPreviousData = async (data) => {
   return await dbConnection.execute(async () => {
     // enrich transition data based on the data stored
-    for (const d of data)
-      d.transition.prevStatus = await getLocationActivationStatus(d.id);
+    for (const d of data) {
+      const location = await getLocation(d.id);
+      if (!location) {
+        d.transition.prevStatus = activationStatus.UNKNOWN;
+        d.transition.prevGeoSource = 0;
+      } 
+      else {
+        d.transition.prevStatus = location.is_active ? activationStatus.ACTIVE : activationStatus.INACTIVE;
+        d.transition.prevGeoSource = location.geo_source;
+        d.transition.prevLat = location.lat;
+        d.transition.prevLon = location.lon;
+      }
+    }
   });
 };
 
@@ -230,4 +250,4 @@ const batchUpdateLocations = async(data) => {
   });  
 }
 
-export { dbConnection, setup, addUser, getActiveUsers, getUserById, setFilter, setLanguage, deactivateUser, getStats, batchUpdateLocations, enrichDataWithActivationStatus, addOrUpdateLocation, addGeodata };
+export { dbConnection, setup, addUser, getActiveUsers, getUserById, setFilter, setLanguage, deactivateUser, getStats, batchUpdateLocations, enrichDataWithPreviousData, addOrUpdateLocation, addGeodata };
