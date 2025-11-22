@@ -44,8 +44,9 @@ async function synchronize() {
   await dbmanager.batchUpdateLocations(data);
 
   for (const d of data) {
-    // only report essential events
     const reportType = d.transition.reportType;
+
+    // only report essential events
     switch(reportType) {
       case locationStatus.CREATE:
       case locationStatus.DELETE:

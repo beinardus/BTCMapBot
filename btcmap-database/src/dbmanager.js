@@ -65,8 +65,18 @@ CREATE TABLE IF NOT EXISTS "stats" (
         "latest_stamp"  TIMESTAMP,
         PRIMARY KEY("id" AUTOINCREMENT)
 );`);      
+
+    await db.run(`
+CREATE TABLE "location_actions" (
+        "id"	INTEGER UNIQUE,
+        "action"	TEXT NOT NULL,
+        "location_id"	INTEGER NOT NULL,
+        "json"	TEXT,
+        "stamp" TIMESTAMP,
+        PRIMARY KEY("id" AUTOINCREMENT)
+);`);
   });
-}
+};
 
 const addUser = async(chat) => {
   await dbConnection.execute(async db => {
@@ -196,6 +206,25 @@ const addGeodata = async(geodata) => {
   return result;
 }
 
+const addLocationAction = async(action) => {
+  const result = await dbConnection.execute(async db => {
+    const res = await db.run(
+      `
+      insert into location_actions (action, location_id, json, stamp)
+      values ($action, $location_id, $json, $stamp);
+      `,
+      {
+        $action: action.action,
+        $location_id: action.locationId,
+        $stamp: action.stamp,
+        $json: JSON.stringify(action.data)
+      }
+    );
+    return res.lastID;
+  });
+  return result;
+}
+
 const enrichDataWithPreviousData = async (data) => {
   return await dbConnection.execute(async () => {
     // enrich transition data based on the data stored
@@ -225,10 +254,20 @@ const batchUpdateLocations = async(data) => {
 
       for (const d of data) {
         logger.silly(JSON.stringify(d));
+        const stamp = d.transition.stamp.toISOString();
+
         await addOrUpdateLocation({
           ...d,
           is_active: !d.deleted_at,
-          stamp: d.transition.stamp.toISOString()
+          stamp: stamp
+        });
+
+        // record the action in the database
+        await addLocationAction({
+          action: d.transition.reportType,
+          locationId: d.id,
+          data: d,
+          stamp: stamp
         });
       }
 
