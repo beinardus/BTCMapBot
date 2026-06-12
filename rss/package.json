@@ -1,0 +1,18 @@
+{
+  "type": "module",
+  "name": "rss",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "crypto": "^1.0.1",
+    "express": "^5.2.1",
+    "feed": "^4.2.2"
+  }
+}
