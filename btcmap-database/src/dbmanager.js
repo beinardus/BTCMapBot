@@ -71,6 +71,8 @@ CREATE TABLE IF NOT EXISTS "location_actions" (
         "id"	INTEGER UNIQUE,
         "action"	TEXT NOT NULL,
         "location_id"	INTEGER NOT NULL,
+        "changeset_id" INTEGER,
+        "user" TEXT,
         "json"	TEXT,
         "stamp" TIMESTAMP,
         PRIMARY KEY("id" AUTOINCREMENT)
@@ -216,12 +218,14 @@ const addLocationAction = async(action) => {
   const result = await dbConnection.execute(async db => {
     const res = await db.run(
       `
-      insert into location_actions (action, location_id, json, stamp)
-      values ($action, $location_id, $json, $stamp);
+      insert into location_actions (action, location_id, changeset_id, user, json, stamp)
+      values ($action, $location_id, $changeset_id, $user, $json, $stamp);
       `,
       {
         $action: action.action,
         $location_id: action.locationId,
+        $changeset_id: action.changesetId,
+        $user: action.user,
         $stamp: action.stamp,
         $json: JSON.stringify(action.data)
       }
@@ -268,10 +272,15 @@ const batchUpdateLocations = async(data) => {
           stamp: stamp
         });
 
+        const reportType = d.transition.reportType;
+        const changeset = d.history ? d.history[reportType] : undefined;
+
         // record the action in the database
         await addLocationAction({
-          action: d.transition.reportType,
+          action: reportType,
           locationId: d.id,
+          changesetId: changeset?.id,
+          user: changeset?.user,
           data: d,
           stamp: stamp
         });

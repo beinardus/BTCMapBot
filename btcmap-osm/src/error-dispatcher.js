@@ -10,6 +10,25 @@ class BTCMapError extends CustomError {
   }
 }
 
+class OSMError extends CustomError {
+  constructor(message, cause) {
+    super(message);
+    this.name = "OSMError";
+    this.cause = cause;
+  }
+}
+
+const dispatchOSMError = (err) => {
+  if (err instanceof RequestError && err.message.match(/ECONNREFUSED/) && config.proxy )
+    throw new BTCMapError("Connection Refused. Proxy misconfigured?");
+
+  const errorMessage = err?.response?.body?.description;
+  if (errorMessage)
+    throw new BTCMapError(`OSM API Error: ${errorMessage}`, err);
+
+  throw err;
+};
+
 const dispatchBTCMapError = (err) => {
 
   if (err instanceof RequestError && err.message.match(/ECONNREFUSED/) && config.proxy )
@@ -22,4 +41,4 @@ const dispatchBTCMapError = (err) => {
   throw err;
 };
 
-export { dispatchBTCMapError, BTCMapError };
+export { dispatchBTCMapError, BTCMapError, dispatchOSMError, OSMError };

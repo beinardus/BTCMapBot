@@ -7,6 +7,7 @@ import * as reporter from "./zmq-reporter.js"; // or use plain reporter.js for d
 //import * as reporter from "./reporter.js";
 import { createStats } from "./stats.js";
 import { enrichDataWithTransition, enrichDataWithReportType } from "./data-interpreter.js";
+import { enrichDataWithHistory } from "./history-data.js";
 import { CustomError } from "custom-error";
 import { updateGeo, geoFromLocation } from "./geo-data.js";
 
@@ -27,6 +28,7 @@ async function synchronize() {
   enrichDataWithTransition(data, latestUpdate);
   await dbmanager.enrichDataWithPreviousData(data);
   enrichDataWithReportType(data);
+  await enrichDataWithHistory(data);
 
   for (const d of data) 
     try {

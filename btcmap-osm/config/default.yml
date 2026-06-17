@@ -13,5 +13,8 @@ geoapify:
   url-fmt: "https://api.geoapify.com/v1/geocode/reverse?lat=[LAT]&lon=[LON]&apiKey=[GEOAPIFY_API_KEY]"
 nominatim:
   url-fmt: "http://btcmap-nominatim-proxy:3000/geo?lat=[LAT]&lon=[LON]"
+osm:
+  url-fmt: "https://api.openstreetmap.org/api/0.6/[TYPE]/[ID]/history"  
+
 zmq:
   url: "tcp://0.0.0.0:3000"

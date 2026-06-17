@@ -18,6 +18,7 @@
     "csv-parser": "^3.1.0",
     "custom-error": "file:../custom-error",
     "dotenv": "^16.4.7",
+    "fast-xml-parser": "^5.9.2",
     "geoapify": "file:../geoapify",
     "geolib": "^3.3.4",
     "got": "^13.0.0",
