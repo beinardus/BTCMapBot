@@ -22,6 +22,8 @@ app.get("/deletions-europe.xml", (req, res) => {
     SELECT
       la.action,
       la.stamp,
+      la.changeset_id,
+      la.user,
       l.id,
       l.type,
       l.geo_country_code,
@@ -75,6 +77,7 @@ app.get("/deletions-europe.xml", (req, res) => {
       <p><strong>City:</strong> ${row.addr_city ?? "n/a"}</p>
       <p><strong>Country:</strong> ${row.geo_country_code.toUpperCase()}</p>
       <p><strong>Deleted at:</strong> ${row.stamp} (UTC)</p>
+      <p><strong>Deleted by:</strong> ${row.user ?? "n/a"}</p>
       <p><a href="${osmUrl}">View on OpenStreetMap</a></p>
     `;
 
@@ -82,7 +85,8 @@ app.get("/deletions-europe.xml", (req, res) => {
       title,
       category: [
         { name: "action:delete" },
-        { name: `country:${row.geo_country_code.toUpperCase()}` }],
+        { name: `country:${row.geo_country_code.toUpperCase()}` },
+        { name: `user:${row.user ?? "n/a"}` }],
       id: guid,
       link: osmUrl,
       description,

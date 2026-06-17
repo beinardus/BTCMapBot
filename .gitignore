@@ -8,3 +8,4 @@ data/database.db
 data/database.sqbpro
 **/config/local.yml
 .env
+data/database.db-journal

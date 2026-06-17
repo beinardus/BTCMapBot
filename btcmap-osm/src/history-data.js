@@ -3,7 +3,7 @@ import config from "config";
 import { XMLParser } from "fast-xml-parser";
 import { injectProxy } from "http-utils";
 import { dispatchOSMError } from "./error-dispatcher.js";
-import { activationStatus } from "btcmap-common";
+import { locationStatus } from "btcmap-common";
 
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" });
 const osmConfig = config.get("osm");
@@ -75,7 +75,7 @@ async function fetchHistory(poi) {
   }
 }
 
-export async function enrichWithHistory(data) {
+export async function enrichDataWithHistory(data) {
 
   const toChangeset = (v) =>
     v ? { id: v.changeset, user: v.user } : undefined;
@@ -83,8 +83,10 @@ export async function enrichWithHistory(data) {
   for  (const d of data) {
     const versions = await fetchHistory(d);
 
-    if (!versions || versions.length === 0) 
-      d.history = { [activationStatus.UPDATE]: undefined, [activationStatus.CREATE]: undefined, [activationStatus.DELETE]: undefined };
+    if (!versions || versions.length === 0) {
+      d.history = { [locationStatus.UPDATE]: undefined, [locationStatus.CREATE]: undefined, [locationStatus.DELETE]: undefined };
+      continue;
+    }
 
     // latest: last version in history
     const latestVersion = versions[versions.length - 1];
@@ -116,9 +118,9 @@ export async function enrichWithHistory(data) {
     }
 
     d.history = {
-      [activationStatus.UPDATE]: toChangeset(latestVersion),
-      [activationStatus.CREATE]: toChangeset(createdVersion),
-      [activationStatus.DELETE]: toChangeset(deletedVersion),
+      [locationStatus.UPDATE]: toChangeset(latestVersion),
+      [locationStatus.CREATE]: toChangeset(createdVersion),
+      [locationStatus.DELETE]: toChangeset(deletedVersion),
     };
   }
 }
