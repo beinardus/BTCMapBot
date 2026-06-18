@@ -11,10 +11,13 @@ btcmap:
     &updated_since=[ZULU]&include_deleted=true"
 geoapify:
   url-fmt: "https://api.geoapify.com/v1/geocode/reverse?lat=[LAT]&lon=[LON]&apiKey=[GEOAPIFY_API_KEY]"
+  user-agent: "BTCMapBot/1.0 (+https://github.com/beinardus/BTCMapBot)"
 nominatim:
   url-fmt: "http://btcmap-nominatim-proxy:3000/geo?lat=[LAT]&lon=[LON]"
+  user-agent: "BTCMapBot/1.0 (+https://github.com/beinardus/BTCMapBot)"
 osm:
   url-fmt: "https://api.openstreetmap.org/api/0.6/[TYPE]/[ID]/history"  
+  user-agent: "BTCMapBot/1.0 (+https://github.com/beinardus/BTCMapBot)"
 
 zmq:
   url: "tcp://0.0.0.0:3000"

@@ -10,7 +10,8 @@ const nominatimConfig = config.get("nominatim");
 const constructRequestOptions = () => {
   return injectProxy(
     {
-      responseType: "json"
+      responseType: "json",
+      headers: {"User-Agent": nominatimConfig["user-agent"]}
     },
     config.get("proxy"));
 }

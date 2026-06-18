@@ -9,7 +9,12 @@ const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" 
 const osmConfig = config.get("osm");
 
 const constructRequestOptions = () => {
-  return injectProxy({responseType: "text"}, config.get("proxy"));
+  return injectProxy(
+    {
+      responseType: "text",
+      headers: {"User-Agent": osmConfig["user-agent"]}
+    },
+    config.get("proxy"));
 }
 
 /**

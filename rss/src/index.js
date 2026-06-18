@@ -17,6 +17,12 @@ function makeGuid(osmUrl, stamp) {
     .digest("hex");
 }
 
+function sanitizeCategory(value) {
+  // Replace any character that's not alphanumeric, dash, underscore, or colon
+  return value.replace(/[^a-zA-Z0-9\-_:]/g, "_");
+}
+
+
 app.get("/deletions-europe.xml", (req, res) => {
   const stmt = db.prepare(`
     SELECT
@@ -86,7 +92,7 @@ app.get("/deletions-europe.xml", (req, res) => {
       category: [
         { name: "action:delete" },
         { name: `country:${row.geo_country_code.toUpperCase()}` },
-        { name: `user:${row.user ?? "n/a"}` }],
+        { name: `user:${sanitizeCategory(row.user ?? "")}` }],
       id: guid,
       link: osmUrl,
       description,

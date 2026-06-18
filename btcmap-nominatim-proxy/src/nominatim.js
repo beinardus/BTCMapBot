@@ -11,9 +11,7 @@ const constructRequestOptions = () => {
   return injectProxy(
     {
       responseType: "json",
-      headers: {
-        "User-Agent": nominatimConfig["user-agent"]
-      }
+      headers: {"User-Agent": nominatimConfig["user-agent"]}
     },
     config.get("proxy")
   );

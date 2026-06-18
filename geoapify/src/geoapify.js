@@ -9,7 +9,11 @@ dotenv.config();
 const geoapifyConfig = config.get("geoapify");
 
 const constructRequestOptions = () => {
-  return injectProxy({responseType: "json"}, config.get("proxy"));
+  return injectProxy({
+    responseType: "json",
+    headers: {"User-Agent": geoapifyConfig["user-agent"]}
+  },
+  config.get("proxy"));
 }
 
 async function getGeo(latitude, longitude) {
