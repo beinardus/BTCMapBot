@@ -80,7 +80,7 @@ async function executeJob(jobName) {
 }
 
 async function main() {
-  logger.info("BTCMap synchronizer v1.3 started");
+  logger.info("BTCMap synchronizer v1.3.1 started");
   await reporter.setup();
 
   const scheduledJob = schedule.scheduleJob(JOB_NAME, config.get("cron"), async () => await executeJob(JOB_NAME));
