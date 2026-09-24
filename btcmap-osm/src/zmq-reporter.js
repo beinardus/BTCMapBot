@@ -24,7 +24,7 @@ const report = async (status, l) => {
       });
 
       logger.debug(`${status}: ${l.id} and more published on zmq`);
-      publisher.send(message);
+      await publisher.send(message);
       break;
     }
     

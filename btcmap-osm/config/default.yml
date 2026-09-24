@@ -18,6 +18,5 @@ nominatim:
 osm:
   url-fmt: "https://api.openstreetmap.org/api/0.6/[TYPE]/[ID]/history"  
   user-agent: "BTCMapBot/1.0 (+https://github.com/beinardus/BTCMapBot)"
-
 zmq:
   url: "tcp://0.0.0.0:3000"
